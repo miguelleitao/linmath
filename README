@@ -2,8 +2,18 @@
 
 linmath.h provides the most used types required programming computer graphice:
 
+vec2 -- 2 element vector of floats
 vec3 -- 3 element vector of floats
 vec4 -- 4 element vector of floats (4th component used for homogenous computations)
+
+vec2f -- 2 element vector of floats
+vec3f -- 3 element vector of floats
+vec4f -- 4 element vector of floats (4th component used for homogenous computations)
+
+vec2d -- 2 element vector of doubles
+vec3d -- 3 element vector of doubles
+vec4d -- 4 element vector of doubles (4th component used for homogenous computations)
+
 mat4x4 -- 4 by 4 elements matrix, computations are done in column major order
 quat -- quaternion
 
