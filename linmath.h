@@ -313,42 +313,6 @@ static inline void mat4x4_mul_scalar(mat4x4 M,const float k)
 }
 
 /**
- * @brief mat4x4_scaled_aniso R = scale_aniso(A,x,y,z)
- * @param R
- * @param A
- * @param x
- * @param y
- * @param z
- */
-static inline void mat4x4_scaled(mat4x4 R,const mat4x4 A,
-								 const float x,const  float y,const float z)
-{
-	int i;
-	vec4_scaled(R[0], A[0], x);
-	vec4_scaled(R[1], A[1], y);
-	vec4_scaled(R[2], A[2], z);
-	for(i = 0; i < 4; ++i)
-	{
-		R[3][i] = A[3][i];
-	}
-}
-
-/**
- * @brief mat4x4_scale_aniso M *= ((x,0,0,0)(0,y,0,0)(0,0,z,0)(0,0,0,1))
- * @param M
- * @param x
- * @param y
- * @param z
- */
-static inline void mat4x4_scale(mat4x4 M,
-								const float x,const  float y,const float z)
-{
-	vec4_scale(M[0], x);
-	vec4_scale(M[1], y);
-	vec4_scale(M[2], z);
-}
-
-/**
  * @brief mat4x4_muled R = A*B;
  * @param R
  * @param A
@@ -356,12 +320,46 @@ static inline void mat4x4_scale(mat4x4 M,
  */
 static inline void mat4x4_mult(mat4x4 R,const mat4x4 A, const mat4x4 B)
 {
-	int k, r, c;
-	for(c=0; c<4; ++c) for(r=0; r<4; ++r) {
-		R[c][r] = 0.f;
-		for(k=0; k<4; ++k)
-			R[c][r]  += A[k][r] * B[c][k];
-	}
+        int k, r, c;
+        for(c=0; c<4; ++c) for(r=0; r<4; ++r) {
+                R[c][r] = 0.f;
+                for(k=0; k<4; ++k)
+                        R[c][r]  += A[k][r] * B[c][k];
+        }
+}
+
+
+/**
+ * @brief mat4x4_scaled R = scale_aniso(A,x,y,z)
+ * @param R
+ * @param A
+ * @param x
+ * @param y
+ * @param z
+ */
+static inline void mat4x4_scaled(mat4x4 R,const mat4x4 A, const float x,const  float y,const float z)
+{
+	mat4x4 S = {
+         {x, 0, 0, 0},
+         {0, y, 0, 0},
+         {0, 0, z, 0},
+         {0, 0, 0, 1}
+ 	};
+ 	mat4x4_mult(R, A, S);
+}
+
+/**
+ * @brief mat4x4_scale M *= ((x,0,0,0)(0,y,0,0)(0,0,z,0)(0,0,0,1))
+ * @param M
+ * @param x
+ * @param y
+ * @param z
+ */
+static inline void mat4x4_scale(mat4x4 M, const float x,const  float y,const float z)
+{
+	mat4x4 A;
+	mat4x4_copy(A,M);
+	mat4x4_scaled(M,A,x,y,z);
 }
 
 /**
