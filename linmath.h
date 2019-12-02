@@ -4,6 +4,12 @@
 #include <math.h>
 #include <string.h>
 
+#ifdef LINMATH_NO_INLINE
+#define LINMATH_H_FUNC static
+#else
+#define LINMATH_H_FUNC static inline
+#endif
+
 #define LINMATH_H_DEFINE_VEC(N) LINMATH_H_DEFINE_VEC_TYPE(N, float) 
 #define LINMATH_H_DEFINE_VEC_TYPE(N,T) LINMATH_H_DEFINE_VEC_TYPE_PREFIX(N, T, )
 
@@ -11,43 +17,43 @@
 
 #define LINMATH_H_DEFINE_VEC_TYPE_PREFIX(N,T,P)  \
 	typedef T vec##N##P[N]; \
-	static inline void vec##N##P##_added(vec##N##P r, const vec##N##P a,const vec##N##P b) \
+	LINMATH_H_FUNC void vec##N##P##_added(vec##N##P r, const vec##N##P a,const vec##N##P b) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		  r[i] = a[i] + b[i]; \
 	} \
-	static inline void vec##N##P##_add(vec##N##P a,const vec##N##P b) \
+	LINMATH_H_FUNC void vec##N##P##_add(vec##N##P a,const vec##N##P b) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		  a[i] += b[i]; \
 	} \
-	static inline void vec##N##P##_subed(vec##N##P r, const vec##N##P a, const vec##N##P b) \
+	LINMATH_H_FUNC void vec##N##P##_subed(vec##N##P r, const vec##N##P a, const vec##N##P b) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		  r[i] = a[i] - b[i]; \
 	} \
-	static inline void vec##N##P##_sub(vec##N##P a, const vec##N##P b) \
+	LINMATH_H_FUNC void vec##N##P##_sub(vec##N##P a, const vec##N##P b) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		  a[i] -= b[i]; \
 	} \
-	static inline void vec##N##P##_scaled(vec##N##P r, const vec##N##P v, const T s) \
+	LINMATH_H_FUNC void vec##N##P##_scaled(vec##N##P r, const vec##N##P v, const T s) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		  r[i] = v[i] * s; \
 	} \
-	static inline void vec##N##P##_scale(vec##N##P v, const T s) \
+	LINMATH_H_FUNC void vec##N##P##_scale(vec##N##P v, const T s) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		  v[i] *= s; \
 	} \
-	static inline T vec##N##P##_dot(const vec##N##P a, const vec##N##P b) \
+	LINMATH_H_FUNC T vec##N##P##_dot(const vec##N##P a, const vec##N##P b) \
 	{ \
 		T p = 0.##P; \
 		int i; \
@@ -55,45 +61,45 @@
 		  p += b[i]*a[i]; \
 		return p; \
 	} \
-	static inline void vec##N##P##_reflected(vec##N##P r,const vec##N##P v,const vec##N##P n)\
+	LINMATH_H_FUNC void vec##N##P##_reflected(vec##N##P r,const vec##N##P v,const vec##N##P n)\
 	{\
 		T p  = 2.##P*vec##N##P##_dot(v, n);\
 		int i;\
 		for(i=0;i<N;++i)\
 		r[i] = v[i] - p*n[i];\
 	}\
-	static inline void vec##N##P##_reflect(vec##N##P v,const vec##N##P n)\
+	LINMATH_H_FUNC void vec##N##P##_reflect(vec##N##P v,const vec##N##P n)\
 	{\
 		T p  = 2.##P*vec##N##P##_dot(v, n);\
 		int i;\
 		for(i=0;i<N;++i)\
 		  v[i] -= p*n[i];\
 	}\
-	static inline T vec##N##P##_len(const vec##N##P v) \
+	LINMATH_H_FUNC T vec##N##P##_len(const vec##N##P v) \
 	{ \
 		return sqrt##P(vec##N##P##_dot(v,v)); \
 	} \
-	static inline float vec##N##P##_len2(const vec##N##P v) \
+	LINMATH_H_FUNC float vec##N##P##_len2(const vec##N##P v) \
 	{ \
 		return vec##N##P##_dot(v,v); \
 	} \
-	static inline void vec##N##P##_normalized(vec##N##P r,const vec##N##P v) \
+	LINMATH_H_FUNC void vec##N##P##_normalized(vec##N##P r,const vec##N##P v) \
 	{ \
 		T k = 1.##P / vec##N##P##_len(v); \
 		vec##N##P##_scaled(r, v, k); \
 	} \
-	static inline void vec##N##P##_normalize(vec##N##P v) \
+	LINMATH_H_FUNC void vec##N##P##_normalize(vec##N##P v) \
 	{ \
 		T k = 1.##P / vec##N##P##_len(v); \
 		vec##N##P##_scale(v, k); \
 	} \
-	static inline void vec##N##P##_min(vec##N##P r, const vec##N##P a, const vec##N##P b) \
+	LINMATH_H_FUNC void vec##N##P##_min(vec##N##P r, const vec##N##P a, const vec##N##P b) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		r[i] = a[i]<b[i] ? a[i] : b[i]; \
 	} \
-	static inline void vec##N##P##_max(vec##N##P r, const  vec##N##P a,const vec##N##P b) \
+	LINMATH_H_FUNC void vec##N##P##_max(vec##N##P r, const  vec##N##P a,const vec##N##P b) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
@@ -113,19 +119,19 @@ LINMATH_H_DEFINE_VEC_TYPE_PREFIX(2,float,f)
 LINMATH_H_DEFINE_VEC_TYPE_PREFIX(3,float,f)
 LINMATH_H_DEFINE_VEC_TYPE_PREFIX(4,float,f)
 
-static inline double vec2_cross(vec2 a, vec2 b)
+LINMATH_H_FUNC double vec2_cross(vec2 a, vec2 b)
 {
 	// magnitude of 3D cross product
 	return a[0]*b[1] - a[1]*b[0];
 }
 
-static inline void vec3_cross(vec3 r, const vec3 a, const vec3 b)
+LINMATH_H_FUNC void vec3_cross(vec3 r, const vec3 a, const vec3 b)
 {
 	r[0] = a[1]*b[2] - a[2]*b[1];
 	r[1] = a[2]*b[0] - a[0]*b[2];
 	r[2] = a[0]*b[1] - a[1]*b[0];
 }
-static inline void vec4_cross(vec4 r, const vec4 a, const vec4 b)
+LINMATH_H_FUNC void vec4_cross(vec4 r, const vec4 a, const vec4 b)
 {
 	r[0] = a[1]*b[2] - a[2]*b[1];
 	r[1] = a[2]*b[0] - a[0]*b[2];
@@ -135,7 +141,7 @@ static inline void vec4_cross(vec4 r, const vec4 a, const vec4 b)
 ///##########################################################################///
 typedef float mat4x4[4][4];
 
-static inline void mat4x4_make_identity(mat4x4 M)
+LINMATH_H_FUNC void mat4x4_make_identity(mat4x4 M)
 {
 	memset(M,0,16*sizeof(float));
 	int i, j;
@@ -143,7 +149,7 @@ static inline void mat4x4_make_identity(mat4x4 M)
 		M[i][j] =1.0f;
 }
 
-static inline void mat4x4_make_translation(mat4x4 M,
+LINMATH_H_FUNC void mat4x4_make_translation(mat4x4 M,
 										   const float x,const float y,const float z)
 {
 	mat4x4_make_identity(M);
@@ -152,7 +158,7 @@ static inline void mat4x4_make_translation(mat4x4 M,
 	M[3][2] = z;
 }
 
-static inline void mat4x4_make_scaling(mat4x4 M,
+LINMATH_H_FUNC void mat4x4_make_scaling(mat4x4 M,
 									   const float x,const float y,const float z)
 {
 	mat4x4_make_identity(M);
@@ -161,7 +167,7 @@ static inline void mat4x4_make_scaling(mat4x4 M,
 	M[2][2] = z;
 }
 
-static inline void mat4x4_make_rotation(mat4x4 M,
+LINMATH_H_FUNC void mat4x4_make_rotation(mat4x4 M,
 										const float x,const float y,const float z, const float angle_rad)
 {
 	const float cA = cosf(angle_rad);
@@ -193,23 +199,21 @@ static inline void mat4x4_make_rotation(mat4x4 M,
 	M[3][3]= 1.0f;
 }
 
-
-
-static inline void mat4x4_copy(mat4x4 M, const mat4x4 N)
+LINMATH_H_FUNC void mat4x4_copy(mat4x4 M, const mat4x4 N)
 {
 	memcpy(M,N,sizeof(float)*16); // this should be faster!
 }
-static inline void mat4x4_row(vec4 r, const mat4x4 M, int i)
+LINMATH_H_FUNC void mat4x4_row(vec4 r, const mat4x4 M, int i)
 {
 	int k;
 	for(k=0; k<4; ++k)
 		r[k] = M[k][i];
 }
-static inline void mat4x4_col(vec4 r,const mat4x4 M, int i)
+LINMATH_H_FUNC void mat4x4_col(vec4 r,const mat4x4 M, int i)
 {
 	memcpy(r,M[i],sizeof(float)*4); // this should be faster!
 }
-static inline void mat4x4_transposed(mat4x4 M,const mat4x4 N)
+LINMATH_H_FUNC void mat4x4_transposed(mat4x4 M,const mat4x4 N)
 {
 	int i, j;
 	for(j=0; j<4; ++j)
@@ -222,7 +226,7 @@ static inline void mat4x4_transposed(mat4x4 M,const mat4x4 N)
  * @param A
  * @param B
  */
-static inline void mat4x4_added(mat4x4 R,const mat4x4 A,const mat4x4 B)
+LINMATH_H_FUNC void mat4x4_added(mat4x4 R,const mat4x4 A,const mat4x4 B)
 {
 	float* r = &(R[0][0]);
 	const float* a = (float*)A;
@@ -238,7 +242,7 @@ static inline void mat4x4_added(mat4x4 R,const mat4x4 A,const mat4x4 B)
  * @param A
  * @param B
  */
-static inline void mat4x4_add(mat4x4 A,const mat4x4 B)
+LINMATH_H_FUNC void mat4x4_add(mat4x4 A,const mat4x4 B)
 {
 	float* a = (float*)A;
 	const float* b = (float*)B;
@@ -255,7 +259,7 @@ static inline void mat4x4_add(mat4x4 A,const mat4x4 B)
  * @param A
  * @param B
  */
-static inline void mat4x4_subed(mat4x4 M,const mat4x4 A,const mat4x4 B)
+LINMATH_H_FUNC void mat4x4_subed(mat4x4 M,const mat4x4 A,const mat4x4 B)
 {
 	float* r = (float*)M;
 	const float* a = (float*)A;
@@ -271,7 +275,7 @@ static inline void mat4x4_subed(mat4x4 M,const mat4x4 A,const mat4x4 B)
  * @param A
  * @param B
  */
-static inline void mat4x4_sub(mat4x4 A,const mat4x4 B)
+LINMATH_H_FUNC void mat4x4_sub(mat4x4 A,const mat4x4 B)
 {
 	float* a = (float*)A;
 	const float* b = (float*)B;
@@ -289,7 +293,7 @@ static inline void mat4x4_sub(mat4x4 A,const mat4x4 B)
  * @param A
  * @param k
  */
-static inline void mat4x4_muled_scalar(mat4x4 M,const mat4x4 A,const float k)
+LINMATH_H_FUNC void mat4x4_muled_scalar(mat4x4 M,const mat4x4 A,const float k)
 {
 	float* r = (float*)M;
 	const float* a = (float*)A;
@@ -306,7 +310,7 @@ static inline void mat4x4_muled_scalar(mat4x4 M,const mat4x4 A,const float k)
  * @param M
  * @param k
  */
-static inline void mat4x4_mul_scalar(mat4x4 M,const float k)
+LINMATH_H_FUNC void mat4x4_mul_scalar(mat4x4 M,const float k)
 {
 	float* m = (float*)M;
 
@@ -325,7 +329,7 @@ static inline void mat4x4_mul_scalar(mat4x4 M,const float k)
  * @param y
  * @param z
  */
-static inline void mat4x4_scaled(mat4x4 R,const mat4x4 A,
+LINMATH_H_FUNC void mat4x4_scaled(mat4x4 R,const mat4x4 A,
 								 const float x,const  float y,const float z)
 {
 	int i;
@@ -345,7 +349,7 @@ static inline void mat4x4_scaled(mat4x4 R,const mat4x4 A,
  * @param y
  * @param z
  */
-static inline void mat4x4_scale(mat4x4 M,
+LINMATH_H_FUNC void mat4x4_scale(mat4x4 M,
 								const float x,const  float y,const float z)
 {
 	vec4_scale(M[0], x);
@@ -359,7 +363,7 @@ static inline void mat4x4_scale(mat4x4 M,
  * @param A
  * @param B
  */
-static inline void mat4x4_mult(mat4x4 R,const mat4x4 A, const mat4x4 B)
+LINMATH_H_FUNC void mat4x4_mult(mat4x4 R,const mat4x4 A, const mat4x4 B)
 {
 	int k, r, c;
 	for(c=0; c<4; ++c) for(r=0; r<4; ++r) {
@@ -375,7 +379,7 @@ static inline void mat4x4_mult(mat4x4 R,const mat4x4 A, const mat4x4 B)
  * @param M
  * @param v
  */
-static inline void mat4x4_mul_vec4(vec4 r,const mat4x4 M, const vec4 v)
+LINMATH_H_FUNC void mat4x4_mul_vec4(vec4 r,const mat4x4 M, const vec4 v)
 {
 	int i, j;
 	for(j=0; j<4; ++j) {
@@ -392,7 +396,7 @@ static inline void mat4x4_mul_vec4(vec4 r,const mat4x4 M, const vec4 v)
  * @param y
  * @param z
  */
-static inline void mat4x4_translate(mat4x4 M,
+LINMATH_H_FUNC void mat4x4_translate(mat4x4 M,
 									const float x,const float y,const float z)
 {
 	vec4 t = {x, y, z, 0};
@@ -412,7 +416,7 @@ static inline void mat4x4_translate(mat4x4 M,
  * @param y
  * @param z
  */
-static inline void mat4x4_translated(mat4x4 R,const mat4x4 M, const float x,const float y,const float z)
+LINMATH_H_FUNC void mat4x4_translated(mat4x4 R,const mat4x4 M, const float x,const float y,const float z)
 {
 	mat4x4_copy(R,M);
 	mat4x4_translate(R,x,y,z);
@@ -424,7 +428,7 @@ static inline void mat4x4_translated(mat4x4 R,const mat4x4 M, const float x,cons
  * @param a
  * @param b
  */
-static inline void mat4x4_from_vec3_mult(mat4x4 R,const vec3 a,const vec3 b)
+LINMATH_H_FUNC void mat4x4_from_vec3_mult(mat4x4 R,const vec3 a,const vec3 b)
 {
 	int i, j;
 	mat4x4_make_identity(R);
@@ -439,7 +443,7 @@ static inline void mat4x4_from_vec3_mult(mat4x4 R,const vec3 a,const vec3 b)
  * @param a
  * @param b
  */
-static inline void mat4x4_from_vec4_mult(mat4x4 R,const vec4 a,const vec4 b)
+LINMATH_H_FUNC void mat4x4_from_vec4_mult(mat4x4 R,const vec4 a,const vec4 b)
 {
 	int i, j;
 	for(i=0; i<4; ++i)
@@ -447,7 +451,7 @@ static inline void mat4x4_from_vec4_mult(mat4x4 R,const vec4 a,const vec4 b)
 			R[i][j] = a[i] * b[j];
 }
 
-static inline void mat4x4_rotated(mat4x4 R, const mat4x4 M,
+LINMATH_H_FUNC void mat4x4_rotated(mat4x4 R, const mat4x4 M,
 								  const float x,const float y,const float z,
 								  float angle_rad)
 {
@@ -455,7 +459,7 @@ static inline void mat4x4_rotated(mat4x4 R, const mat4x4 M,
 	mat4x4_make_rotation(Q,x,y,z,angle_rad);
 	mat4x4_mult(R,M,Q);
 }
-static inline void mat4x4_rotated_X(mat4x4 R,const mat4x4 M,
+LINMATH_H_FUNC void mat4x4_rotated_X(mat4x4 R,const mat4x4 M,
 									const float angle_rad)
 {
 	float s = sinf(angle_rad);
@@ -468,7 +472,7 @@ static inline void mat4x4_rotated_X(mat4x4 R,const mat4x4 M,
 	};
 	mat4x4_mult(R, M, Q);
 }
-static inline void mat4x4_rotated_Y(mat4x4 R,const mat4x4 M,
+LINMATH_H_FUNC void mat4x4_rotated_Y(mat4x4 R,const mat4x4 M,
 									const float angle_rad)
 {
 	float s = sinf(angle_rad);
@@ -481,7 +485,7 @@ static inline void mat4x4_rotated_Y(mat4x4 R,const mat4x4 M,
 	};
 	mat4x4_mult(R, M, Q);
 }
-static inline void mat4x4_rotated_Z(mat4x4 R,const mat4x4 M,
+LINMATH_H_FUNC void mat4x4_rotated_Z(mat4x4 R,const mat4x4 M,
 									const float angle_rad)
 {
 	float s = sinf(angle_rad);
@@ -500,7 +504,7 @@ static inline void mat4x4_rotated_Z(mat4x4 R,const mat4x4 M,
  * @param R
  * @param M
  */
-static inline void mat4x4_inverse(mat4x4 R,const mat4x4 M)
+LINMATH_H_FUNC void mat4x4_inverse(mat4x4 R,const mat4x4 M)
 {
 	float s[6];
 	float c[6];
@@ -541,7 +545,7 @@ static inline void mat4x4_inverse(mat4x4 R,const mat4x4 M)
 	R[3][2] = (-M[3][0] * s[3] + M[3][1] * s[1] - M[3][2] * s[0]) * idet;
 	R[3][3] = ( M[2][0] * s[3] - M[2][1] * s[1] + M[2][2] * s[0]) * idet;
 }
-static inline void mat4x4_orthonormalized(mat4x4 R,const mat4x4 M)
+LINMATH_H_FUNC void mat4x4_orthonormalized(mat4x4 R,const mat4x4 M)
 {
 	mat4x4_copy(R, M);
 	float s = 1.;
@@ -565,7 +569,7 @@ static inline void mat4x4_orthonormalized(mat4x4 R,const mat4x4 M)
 	vec3_normalize(R[0]);
 }
 
-static inline void mat4x4_make_frustum(mat4x4 M,
+LINMATH_H_FUNC void mat4x4_make_frustum(mat4x4 M,
 									   const float l,
 									   const float r,
 									   const float b,
@@ -587,7 +591,7 @@ static inline void mat4x4_make_frustum(mat4x4 M,
 	M[3][2] = -2.f*(f*n)/(f-n);
 	M[3][0] = M[3][1] = M[3][3] = 0.f;
 }
-static inline void mat4x4_make_ortho(mat4x4 M,
+LINMATH_H_FUNC void mat4x4_make_ortho(mat4x4 M,
 									 const float l,
 									 const float r,
 									 const float b,
@@ -609,11 +613,11 @@ static inline void mat4x4_make_ortho(mat4x4 M,
 	M[3][2] = -(f+n)/(f-n);
 	M[3][3] = 1.f;
 }
-static inline void mat4x4_make_perspective(mat4x4 R,
-										   const float y_fov,
-										   const float aspect,
-										   const float n,
-										   const float f)
+LINMATH_H_FUNC void mat4x4_make_perspective(mat4x4 R,
+        const float y_fov,
+        const float aspect,
+        const float n,
+        const float f)
 {
 	/* NOTE: Degrees are an unhandy unit to work with.
 	 * linmath.h uses radians for everything! */
@@ -642,10 +646,10 @@ static inline void mat4x4_make_perspective(mat4x4 R,
 
 
 
-static inline void mat4x4_make_look_at(mat4x4 R,
-									   const vec3 eye,
-									   const vec3 center,
-									   const vec3 up)
+LINMATH_H_FUNC void mat4x4_make_look_at(mat4x4 R,
+            const vec3 eye,
+            const vec3 center,
+            const vec3 up)
 {
 	/* Adapted from Android's OpenGL Matrix.java.                        */
 	/* See the OpenGL GLUT documentation for gluLookAt for a description */
@@ -685,7 +689,7 @@ static inline void mat4x4_make_look_at(mat4x4 R,
 	R[3][3] =  1.f;
 }
 /*
-static inline void mat4x4_make_look_at(mat4x4 R,
+LINMATH_H_FUNC void mat4x4_make_look_at(mat4x4 R,
 									   const float ex,
 									   const float ey,
 									   const float ez,
@@ -712,13 +716,13 @@ static inline void mat4x4_make_look_at(mat4x4 R,
 ///                             QUATERNIONS                                  ///
 ///##########################################################################///
 typedef float quat[4];
-static inline void quat_make_identity(quat q)
+LINMATH_H_FUNC void quat_make_identity(quat q)
 {
 	q[1] = q[2] = q[3] = 0.0f;
 	q[0] = 1.0f;
 }
 
-static inline void quat_make_from_euler(quat q,
+LINMATH_H_FUNC void quat_make_from_euler(quat q,
 										const float roll,
 										const float pitch,
 										const float yaw)
@@ -736,13 +740,13 @@ static inline void quat_make_from_euler(quat q,
 	q[0] = t0 * t2 * t4 + t1 * t3 * t5;
 }
 
-static inline void quat_make_from_euler_vec(quat q,
+LINMATH_H_FUNC void quat_make_from_euler_vec(quat q,
 										const vec3 rpy)
 {
 	quat_make_from_euler(q,rpy[0],rpy[1],rpy[2]);
 }
 
-static inline void quat_make_from_rotation(quat r,
+LINMATH_H_FUNC void quat_make_from_rotation(quat r,
 										   const float x,
 										   const float y,
 										   const float z,
@@ -760,7 +764,7 @@ static inline void quat_make_from_rotation(quat r,
 }
 
 
-static inline void quat_make_from_rotation_vec(quat r,
+LINMATH_H_FUNC void quat_make_from_rotation_vec(quat r,
 										   const vec3 axis,
 										   const float angle)
 {
@@ -768,7 +772,7 @@ static inline void quat_make_from_rotation_vec(quat r,
 }
 
 
-static inline void quat_to_euler(vec3 rpy, const quat q)
+LINMATH_H_FUNC void quat_to_euler(vec3 rpy, const quat q)
 {
 	float ysqr = q[2] * q[2];
 	float t0 = -2.0f * (ysqr + q[3] * q[3]) + 1.0f;
@@ -786,34 +790,34 @@ static inline void quat_to_euler(vec3 rpy, const quat q)
 }
 
 
-static inline void quat_added(quat r,const quat a,const quat b)
+LINMATH_H_FUNC void quat_added(quat r,const quat a,const quat b)
 {
 	int i;
 	for(i=0; i<4; ++i)
 		r[i] = a[i] + b[i];
 }
 
-static inline void quat_add(quat a,const quat b)
+LINMATH_H_FUNC void quat_add(quat a,const quat b)
 {
 	int i;
 	for(i=0; i<4; ++i)
 		a[i] += b[i];
 }
 
-static inline void quat_subed(quat r,const quat a,const quat b)
+LINMATH_H_FUNC void quat_subed(quat r,const quat a,const quat b)
 {
 	int i;
 	for(i=0; i<4; ++i)
 		r[i] = a[i] - b[i];
 }
 
-static inline void quat_sub(quat a,const quat b)
+LINMATH_H_FUNC void quat_sub(quat a,const quat b)
 {
 	int i;
 	for(i=0; i<4; ++i)
 		a[i] -= b[i];
 }
-static inline void quat_muled(quat r,const quat a,const quat b)
+LINMATH_H_FUNC void quat_muled(quat r,const quat a,const quat b)
 {
 	r[1] = a[0] * b[1] + a[1] * b[0] + a[2] * b[3] - a[3] * b[2];
 	r[2] = a[0] * b[2] + a[2] * b[0] + a[3] * b[1] - a[1] * b[3];
@@ -821,13 +825,13 @@ static inline void quat_muled(quat r,const quat a,const quat b)
 	r[0] = a[0] * b[0] - a[1] * b[1] - a[2] * b[2] - a[3] * b[3];
 }
 
-static inline void quat_muled_scalar(quat r,const quat v,const float s)
+LINMATH_H_FUNC void quat_muled_scalar(quat r,const quat v,const float s)
 {
 	int i;
 	for(i=0; i<4; ++i)
 		r[i] = v[i] * s;
 }
-static inline float quat_dot(const quat a,const  quat b)
+LINMATH_H_FUNC float quat_dot(const quat a,const  quat b)
 {
 	float p = 0.f;
 	int i;
@@ -835,7 +839,7 @@ static inline float quat_dot(const quat a,const  quat b)
 		p += b[i]*a[i];
 	return p;
 }
-static inline void quat_conjugated(quat r, const quat q)
+LINMATH_H_FUNC void quat_conjugated(quat r, const quat q)
 {
 	int i;
 	for(i=1; i<4; ++i)
@@ -843,7 +847,7 @@ static inline void quat_conjugated(quat r, const quat q)
 	r[0] = q[0];
 }
 
-static inline void quat_conjugate(quat q)
+LINMATH_H_FUNC void quat_conjugate(quat q)
 {
 	int i;
 	for(i=1; i<4; ++i)
@@ -853,7 +857,7 @@ static inline void quat_conjugate(quat q)
 #define quat_normalized vec4_normalized
 #define quat_normalize vec4_normalize
 
-static inline void quat_mul_vec3(vec3 r,const quat q,const vec3 v)
+LINMATH_H_FUNC void quat_mul_vec3(vec3 r,const quat q,const vec3 v)
 {
 	int i;
 	vec3 a;
@@ -867,7 +871,7 @@ static inline void quat_mul_vec3(vec3 r,const quat q,const vec3 v)
 		r[i] = v[i] + ((a[i]*q[0])+b[i])*2.0f;
 }
 
-static inline void quat_mul_vec4(vec4 r,const quat q,const vec4 v)
+LINMATH_H_FUNC void quat_mul_vec4(vec4 r,const quat q,const vec4 v)
 {
 	int i;
 	vec3 a;
@@ -883,7 +887,7 @@ static inline void quat_mul_vec4(vec4 r,const quat q,const vec4 v)
 }
 
 
-static inline void quat_to_mat4x4(mat4x4 M,const quat q)
+LINMATH_H_FUNC void quat_to_mat4x4(mat4x4 M,const quat q)
 {
 	float xx=(q[1] * q[1]);
 	float xy=(q[1] * q[2]);
@@ -918,7 +922,7 @@ static inline void quat_to_mat4x4(mat4x4 M,const quat q)
 	M[3][3] = 1.0f;
 }
 
-static inline void quat_make_from_mat4x4(quat q,const mat4x4 M)
+LINMATH_H_FUNC void quat_make_from_mat4x4(quat q,const mat4x4 M)
 {
 	float r=0.f;
 	int i;
