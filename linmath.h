@@ -115,7 +115,8 @@ LINMATH_H_DEFINE_VEC_TYPE_PREFIX(4,float,f)
 
 static inline double vec2_cross(vec2 a, vec2 b)
 {
-	// magnitude of 3D cross product
+	// The cross product is only defined in a three-dimensional Euclidean space.
+	// Return the magnitude of 3D cross product.
 	return a[0]*b[1] - a[1]*b[0];
 }
 
