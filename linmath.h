@@ -15,6 +15,26 @@
 
 #define sqrtd(x) sqrt(x)
 
+#define LINMATH_H_DEFINE_VEC_SET(T,P) \
+    LINMATH_H_FUNC void vec2##P##_set(vec2##P r, const T x, const T y) \
+    { \
+        r[0] = x; \
+        r[1] = y; \
+    } \
+    LINMATH_H_FUNC void vec3##P##_set(vec2##P r, const T x, const T y, const T z) \
+    { \
+        r[0] = x; \
+        r[1] = y; \
+        r[2] = z; \
+    } \
+    LINMATH_H_FUNC void vec4##P##_set(vec2##P r, const T x, const T y, const T z, const T w) \
+    { \
+        r[0] = x; \
+        r[1] = y; \
+        r[2] = z; \
+        r[3] = w; \
+    } \
+
 #define LINMATH_H_DEFINE_VEC_TYPE_PREFIX(N,T,P)  \
 	typedef T vec##N##P[N]; \
 	LINMATH_H_FUNC void vec##N##P##_added(vec##N##P r, const vec##N##P a,const vec##N##P b) \
@@ -119,6 +139,8 @@ LINMATH_H_DEFINE_VEC_TYPE_PREFIX(2,float,f)
 LINMATH_H_DEFINE_VEC_TYPE_PREFIX(3,float,f)
 LINMATH_H_DEFINE_VEC_TYPE_PREFIX(4,float,f)
 
+LINMATH_H_DEFINE_VEC_SET(double,d)
+LINMATH_H_DEFINE_VEC_SET(float,f)
 LINMATH_H_FUNC double vec2_cross(vec2 a, vec2 b)
 {
 	// The cross product is only defined in a three-dimensional Euclidean space.
@@ -717,6 +739,15 @@ LINMATH_H_FUNC void mat4x4_make_look_at(mat4x4 R,
 ///                             QUATERNIONS                                  ///
 ///##########################################################################///
 typedef float quat[4];
+
+LINMATH_H_FUNC void quat_set(quat r, const float x, const float y, const float z, const float w) \
+{
+        r[0] = x; 
+        r[1] = y; 
+        r[2] = z; 
+        r[3] = w; 
+}
+
 LINMATH_H_FUNC void quat_make_identity(quat q)
 {
 	q[1] = q[2] = q[3] = 0.0f;
@@ -766,8 +797,8 @@ LINMATH_H_FUNC void quat_make_from_rotation(quat r,
 
 
 LINMATH_H_FUNC void quat_make_from_rotation_vec(quat r,
-										   const vec3 axis,
-										   const float angle)
+            const vec3 axis,
+            const float angle)
 {
 	quat_make_from_rotation(r,axis[0],axis[1],axis[2],angle);
 }
