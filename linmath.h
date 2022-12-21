@@ -21,22 +21,52 @@
         r[0] = x; \
         r[1] = y; \
     } \
-    LINMATH_H_FUNC void vec3##P##_set(vec2##P r, const T x, const T y, const T z) \
+    LINMATH_H_FUNC void vec3##P##_set(vec3##P r, const T x, const T y, const T z) \
     { \
         r[0] = x; \
         r[1] = y; \
         r[2] = z; \
     } \
-    LINMATH_H_FUNC void vec4##P##_set(vec2##P r, const T x, const T y, const T z, const T w) \
+    LINMATH_H_FUNC void vec4##P##_set(vec4##P r, const T x, const T y, const T z, const T w) \
     { \
         r[0] = x; \
         r[1] = y; \
         r[2] = z; \
         r[3] = w; \
     } \
+    LINMATH_H_FUNC void vec2##P##_copy(vec2##P r, const vec2##P s) \
+    { \
+        r[0] = s[0]; \
+        r[1] = s[1]; \
+        r[2] = s[2]; \
+    } \
+    LINMATH_H_FUNC void vec3##P##_copy(vec3##P r, const vec3##P s) \
+    { \
+        r[0] = s[0]; \
+        r[1] = s[1]; \
+        r[2] = s[2]; \
+    } \
+    LINMATH_H_FUNC void vec4##P##_copy(vec4##P r, const vec4##P s) \
+    { \
+        r[0] = s[0]; \
+        r[1] = s[1]; \
+        r[2] = s[2]; \
+    } \
 
 #define LINMATH_H_DEFINE_VEC_TYPE_PREFIX(N,T,P)  \
 	typedef T vec##N##P[N]; \
+	LINMATH_H_FUNC void vec##N##P##_inverted(vec##N##P r, const vec##N##P a) \
+	{ \
+		int i; \
+		for(i=0; i<N; ++i) \
+		  r[i] = -a[i]; \
+	} \
+	LINMATH_H_FUNC void vec##N##P##_invert(vec##N##P a) \
+	{ \
+		int i; \
+		for(i=0; i<N; ++i) \
+		  a[i] = -a[i]; \
+	} \
 	LINMATH_H_FUNC void vec##N##P##_added(vec##N##P r, const vec##N##P a,const vec##N##P b) \
 	{ \
 		int i; \
@@ -81,14 +111,14 @@
 		  p += b[i]*a[i]; \
 		return p; \
 	} \
-	LINMATH_H_FUNC void vec##N##P##_reflected(vec##N##P r,const vec##N##P v,const vec##N##P n)\
+	LINMATH_H_FUNC void vec##N##P##_reflected(vec##N##P r, const vec##N##P v, const vec##N##P n)\
 	{\
 		T p  = 2.##P*vec##N##P##_dot(v, n);\
 		int i;\
-		for(i=0;i<N;++i)\
-		r[i] = v[i] - p*n[i];\
+		for(i=0; i<N; ++i)\
+		  r[i] = v[i] - p*n[i];\
 	}\
-	LINMATH_H_FUNC void vec##N##P##_reflect(vec##N##P v,const vec##N##P n)\
+	LINMATH_H_FUNC void vec##N##P##_reflect(vec##N##P v, const vec##N##P n)\
 	{\
 		T p  = 2.##P*vec##N##P##_dot(v, n);\
 		int i;\
