@@ -38,7 +38,6 @@
     { \
         r[0] = s[0]; \
         r[1] = s[1]; \
-        r[2] = s[2]; \
     } \
     LINMATH_H_FUNC void vec3##P##_copy(vec3##P r, const vec3##P s) \
     { \
@@ -47,6 +46,20 @@
         r[2] = s[2]; \
     } \
     LINMATH_H_FUNC void vec4##P##_copy(vec4##P r, const vec4##P s) \
+    { \
+        r[0] = s[0]; \
+        r[1] = s[1]; \
+        r[2] = s[2]; \
+        r[3] = s[3]; \
+    } \
+    LINMATH_H_FUNC void vec4##P##_from_vec3(vec4##P r, const vec3##P s) \
+    { \
+        r[0] = s[0]; \
+        r[1] = s[1]; \
+        r[2] = s[2]; \
+        r[3] = 0.; \
+    } \
+    LINMATH_H_FUNC void vec3##P##_from_vec4(vec3##P r, const vec4##P s) \
     { \
         r[0] = s[0]; \
         r[1] = s[1]; \
@@ -770,12 +783,20 @@ LINMATH_H_FUNC void mat4x4_make_look_at(mat4x4 R,
 ///##########################################################################///
 typedef float quat[4];
 
-LINMATH_H_FUNC void quat_set(quat r, const float x, const float y, const float z, const float w) \
+LINMATH_H_FUNC void quat_set(quat q, const float w, const float x, const float y, const float z) \
 {
-        r[0] = x; 
-        r[1] = y; 
-        r[2] = z; 
-        r[3] = w; 
+	q[0] = w; 
+	q[1] = x; 
+	q[2] = y; 
+	q[3] = z; 
+}
+
+LINMATH_H_FUNC void quat_set_vec(quat q, const float w, const vec3 xyz)\
+{
+	q[0] = w; 
+	q[1] = xyz[0]; 
+	q[2] = xyz[1]; 
+	q[3] = xyz[2]; 
 }
 
 LINMATH_H_FUNC void quat_make_identity(quat q)
@@ -892,6 +913,12 @@ LINMATH_H_FUNC void quat_muled_scalar(quat r,const quat v,const float s)
 	int i;
 	for(i=0; i<4; ++i)
 		r[i] = v[i] * s;
+}
+LINMATH_H_FUNC void quat_mul_scalar(quat r,const float s)
+{
+	int i;
+	for(i=0; i<4; ++i)
+		r[i] *= s;
 }
 LINMATH_H_FUNC float quat_dot(const quat a,const  quat b)
 {
