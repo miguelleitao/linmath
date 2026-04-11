@@ -3,7 +3,8 @@ PROG=linmath
 SRC_FILE=${PROG}.h
 
 default:
-	echo "${PROG} does not require any make"
+	@echo "${PROG} does not require any make."
+	@echo "Nothing to do."
 
 ${PROG}.list: ${SRC_FILE}
 	gcc -E ${SRC_FILE} -o - | \

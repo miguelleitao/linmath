@@ -204,9 +204,17 @@ LINMATH_H_FUNC void vec4_cross(vec4 r, const vec4 a, const vec4 b)
 	r[2] = a[0]*b[1] - a[1]*b[0];
 	r[3] = 1.f;
 }
-///##########################################################################///
+
+
+/**
+ * @brief 4x4 Matrix data type
+ */
 typedef float mat4x4[4][4];
 
+/**
+ * @brief mat4x4_make_identity M = Identity Matrix
+ * @param M
+ */
 LINMATH_H_FUNC void mat4x4_make_identity(mat4x4 M)
 {
 	memset(M,0,16*sizeof(float));
@@ -778,11 +786,26 @@ LINMATH_H_FUNC void mat4x4_make_look_at(mat4x4 R,
 */
 
 
-///##########################################################################///
-///                             QUATERNIONS                                  ///
-///##########################################################################///
+/**
+ * @brief Quaternion data type
+ * @param [0] = w : Real coefficient
+ * @param [1] = x : Coefficient of the i complex vector
+ * @param [2] = y : Coefficient of the j complex vector
+ * @param [3] = z : Coefficient of the k complex vector
+ * 
+ * A quaternion is a four-dimensional number that extends complex numbers. 
+ * They are primarily used in 3D computer graphics, robotics, and navigation to efficiently represent and interpolate 3D rotations.
+ */
 typedef float quat[4];
 
+/**
+ * @brief Quaternion initialization
+ * @param q : Quaternion to initialize
+ * @param w : Real coefficient
+ * @param x : Coefficient of the i complex vector
+ * @param y : Coefficient of the j complex vector
+ * @param z : Coefficient of the k complex vector
+ */
 LINMATH_H_FUNC void quat_set(quat q, const float w, const float x, const float y, const float z) \
 {
 	q[0] = w; 
@@ -791,6 +814,12 @@ LINMATH_H_FUNC void quat_set(quat q, const float w, const float x, const float y
 	q[3] = z; 
 }
 
+/**
+ * @brief Quaternion initialization
+ * @param q : Quaternion to initialize
+ * @param w : Real coefficient
+ * @param xyz : Vector of complex coefficients
+ */
 LINMATH_H_FUNC void quat_set_vec(quat q, const float w, const vec3 xyz)\
 {
 	q[0] = w; 
