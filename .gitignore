@@ -1,0 +1,12 @@
+
+*.list
+*.c
+html
+html/*
+latex
+latex/*
+*.o
+*.bak
+
+
+
