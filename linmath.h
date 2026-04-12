@@ -80,12 +80,23 @@
 		for(i=0; i<N; ++i) \
 		  a[i] = -a[i]; \
 	} \
+    /** @brief Add two vectors. \
+	  r = a + b \
+      @param r Result \
+      @param a First parcel \
+      @param b Second parcel \
+    */ \
 	LINMATH_H_FUNC void vec##N##P##_added(vec##N##P r, const vec##N##P a,const vec##N##P b) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		  r[i] = a[i] + b[i]; \
 	} \
+    /** @brief In place add vector. \
+	  a += b \
+      @param a First parcel and result\
+      @param b Second parcel\
+     */ \
 	LINMATH_H_FUNC void vec##N##P##_add(vec##N##P a,const vec##N##P b) \
 	{ \
 		int i; \
@@ -98,6 +109,10 @@
 		for(i=0; i<N; ++i) \
 		  r[i] = a[i] - b[i]; \
 	} \
+	/** @brief In place subtract vector.  a -= b \
+      @param a \
+      @param b \
+     */ \
 	LINMATH_H_FUNC void vec##N##P##_sub(vec##N##P a, const vec##N##P b) \
 	{ \
 		int i; \
@@ -785,55 +800,76 @@ LINMATH_H_FUNC void mat4x4_make_look_at(mat4x4 R,
 
 */
 
-
 /**
  * @brief Quaternion data type
  * @param [0] = w : Real coefficient
  * @param [1] = x : Coefficient of the i complex vector
  * @param [2] = y : Coefficient of the j complex vector
  * @param [3] = z : Coefficient of the k complex vector
- * 
- * A quaternion is a four-dimensional number that extends complex numbers. 
- * They are primarily used in 3D computer graphics, robotics, and navigation to efficiently represent and interpolate 3D rotations.
+ *
+ * A quaternion is a four-dimensional number used to represent 3D rotations.
+ * This implementation uses scalar-first convention: (w, x, y, z).
  */
 typedef float quat[4];
 
 /**
- * @brief Quaternion initialization
- * @param q : Quaternion to initialize
- * @param w : Real coefficient
- * @param x : Coefficient of the i complex vector
- * @param y : Coefficient of the j complex vector
- * @param z : Coefficient of the k complex vector
+ * @brief Set quaternion components.
+ *
+ * Initializes a quaternion using scalar-first convention (w, x, y, z).
+ *
+ * @param[out] q Quaternion to initialize
+ * @param[in]  w Scalar component
+ * @param[in]  x X component (imaginary i)
+ * @param[in]  y Y component (imaginary j)
+ * @param[in]  z Z component (imaginary k)
  */
-LINMATH_H_FUNC void quat_set(quat q, const float w, const float x, const float y, const float z) \
+LINMATH_H_FUNC void quat_set(quat q, const float w, const float x, const float y, const float z)
 {
-	q[0] = w; 
-	q[1] = x; 
-	q[2] = y; 
-	q[3] = z; 
+	q[0] = w;
+	q[1] = x;
+	q[2] = y;
+	q[3] = z;
 }
 
 /**
- * @brief Quaternion initialization
- * @param q : Quaternion to initialize
- * @param w : Real coefficient
- * @param xyz : Vector of complex coefficients
+ * @brief Set quaternion from scalar and vector part.
+ *
+ * @param[out] q Quaternion to initialize
+ * @param[in]  w Scalar component
+ * @param[in]  xyz Vector part (x,y,z)
  */
-LINMATH_H_FUNC void quat_set_vec(quat q, const float w, const vec3 xyz)\
+LINMATH_H_FUNC void quat_set_vec(quat q, const float w, const vec3 xyz)
 {
-	q[0] = w; 
-	q[1] = xyz[0]; 
-	q[2] = xyz[1]; 
-	q[3] = xyz[2]; 
+	q[0] = w;
+	q[1] = xyz[0];
+	q[2] = xyz[1];
+	q[3] = xyz[2];
 }
 
+/**
+ * @brief Set quaternion to identity.
+ *
+ * Identity quaternion represents no rotation.
+ *
+ * @param[out] q Quaternion set to (1,0,0,0)
+ */
 LINMATH_H_FUNC void quat_make_identity(quat q)
 {
 	q[1] = q[2] = q[3] = 0.0f;
 	q[0] = 1.0f;
 }
 
+/**
+ * @brief Create quaternion from Euler angles.
+ *
+ * Converts roll, pitch, yaw (radians) into a quaternion.
+ * Rotation order: Z (yaw), Y (pitch), X (roll).
+ *
+ * @param[out] q Result quaternion
+ * @param[in]  roll Rotation around X axis (rad)
+ * @param[in]  pitch Rotation around Y axis (rad)
+ * @param[in]  yaw Rotation around Z axis (rad)
+ */
 LINMATH_H_FUNC void quat_make_from_euler(quat q,
 										const float roll,
 										const float pitch,
@@ -852,38 +888,67 @@ LINMATH_H_FUNC void quat_make_from_euler(quat q,
 	q[0] = t0 * t2 * t4 + t1 * t3 * t5;
 }
 
-LINMATH_H_FUNC void quat_make_from_euler_vec(quat q,
-										const vec3 rpy)
+/**
+ * @brief Create quaternion from Euler vector.
+ *
+ * @param[out] q Result quaternion
+ * @param[in]  rpy Vector (roll, pitch, yaw)
+ */
+LINMATH_H_FUNC void quat_make_from_euler_vec(quat q, const vec3 rpy)
 {
-	quat_make_from_euler(q,rpy[0],rpy[1],rpy[2]);
+	quat_make_from_euler(q, rpy[0], rpy[1], rpy[2]);
 }
 
+/**
+ * @brief Create quaternion from axis-angle.
+ *
+ * Axis is normalized internally.
+ *
+ * @param[out] r Result quaternion
+ * @param[in]  x Axis X
+ * @param[in]  y Axis Y
+ * @param[in]  z Axis Z
+ * @param[in]  angle Rotation angle (rad)
+ */
 LINMATH_H_FUNC void quat_make_from_rotation(quat r,
 										   const float x,
 										   const float y,
 										   const float z,
 										   const float angle)
 {
-
 	vec3 v = {x,y,z};
 	vec3_normalize(v);
 
-	float const S = sinf(angle * 0.5f);
+	float S = sinf(angle * 0.5f);
 	r[1] = v[0] * S;
 	r[2] = v[1] * S;
 	r[3] = v[2] * S;
-	r[0] = cosf(angle* 0.5f);
+	r[0] = cosf(angle * 0.5f);
 }
 
-
+/**
+ * @brief Create quaternion from axis-angle vector.
+ *
+ * @param[out] r Result quaternion
+ * @param[in]  axis Rotation axis
+ * @param[in]  angle Rotation angle (rad)
+ */
 LINMATH_H_FUNC void quat_make_from_rotation_vec(quat r,
-            const vec3 axis,
-            const float angle)
+												const vec3 axis,
+												const float angle)
 {
-	quat_make_from_rotation(r,axis[0],axis[1],axis[2],angle);
+	quat_make_from_rotation(r, axis[0], axis[1], axis[2], angle);
 }
 
-
+/**
+ * @brief Convert quaternion to Euler angles.
+ *
+ * Outputs roll, pitch, yaw (radians).
+ * Input quaternion should be normalized.
+ *
+ * @param[out] rpy Output vector
+ * @param[in]  q Input quaternion
+ */
 LINMATH_H_FUNC void quat_to_euler(vec3 rpy, const quat q)
 {
 	float ysqr = q[2] * q[2];
@@ -901,174 +966,158 @@ LINMATH_H_FUNC void quat_to_euler(vec3 rpy, const quat q)
 	rpy[2] = atan2f(t1, t0);
 }
 
-
+/**
+ * @brief Add two quaternions (out-of-place).
+ */
 LINMATH_H_FUNC void quat_added(quat r,const quat a,const quat b)
 {
-	int i;
-	for(i=0; i<4; ++i)
-		r[i] = a[i] + b[i];
+	for(int i=0;i<4;++i) r[i]=a[i]+b[i];
 }
 
+/**
+ * @brief Add quaternion in-place.
+ */
 LINMATH_H_FUNC void quat_add(quat a,const quat b)
 {
-	int i;
-	for(i=0; i<4; ++i)
-		a[i] += b[i];
+	for(int i=0;i<4;++i) a[i]+=b[i];
 }
 
+/**
+ * @brief Subtract two quaternions (out-of-place).
+ */
 LINMATH_H_FUNC void quat_subed(quat r,const quat a,const quat b)
 {
-	int i;
-	for(i=0; i<4; ++i)
-		r[i] = a[i] - b[i];
+	for(int i=0;i<4;++i) r[i]=a[i]-b[i];
 }
 
+/**
+ * @brief Subtract quaternion in-place.
+ */
 LINMATH_H_FUNC void quat_sub(quat a,const quat b)
 {
-	int i;
-	for(i=0; i<4; ++i)
-		a[i] -= b[i];
+	for(int i=0;i<4;++i) a[i]-=b[i];
 }
+
+/**
+ * @brief Quaternion multiplication (Hamilton product).
+ */
 LINMATH_H_FUNC void quat_muled(quat r,const quat a,const quat b)
 {
-	r[1] = a[0] * b[1] + a[1] * b[0] + a[2] * b[3] - a[3] * b[2];
-	r[2] = a[0] * b[2] + a[2] * b[0] + a[3] * b[1] - a[1] * b[3];
-	r[3] = a[0] * b[3] + a[3] * b[0] + a[1] * b[2] - a[2] * b[1];
-	r[0] = a[0] * b[0] - a[1] * b[1] - a[2] * b[2] - a[3] * b[3];
+	r[1]=a[0]*b[1]+a[1]*b[0]+a[2]*b[3]-a[3]*b[2];
+	r[2]=a[0]*b[2]+a[2]*b[0]+a[3]*b[1]-a[1]*b[3];
+	r[3]=a[0]*b[3]+a[3]*b[0]+a[1]*b[2]-a[2]*b[1];
+	r[0]=a[0]*b[0]-a[1]*b[1]-a[2]*b[2]-a[3]*b[3];
 }
 
+/**
+ * @brief Multiply quaternion by scalar (out-of-place).
+ */
 LINMATH_H_FUNC void quat_muled_scalar(quat r,const quat v,const float s)
 {
-	int i;
-	for(i=0; i<4; ++i)
-		r[i] = v[i] * s;
-}
-LINMATH_H_FUNC void quat_mul_scalar(quat r,const float s)
-{
-	int i;
-	for(i=0; i<4; ++i)
-		r[i] *= s;
-}
-LINMATH_H_FUNC float quat_dot(const quat a,const  quat b)
-{
-	float p = 0.f;
-	int i;
-	for(i=0; i<4; ++i)
-		p += b[i]*a[i];
-	return p;
-}
-LINMATH_H_FUNC void quat_conjugated(quat r, const quat q)
-{
-	int i;
-	for(i=1; i<4; ++i)
-		r[i] = -q[i];
-	r[0] = q[0];
+	for(int i=0;i<4;++i) r[i]=v[i]*s;
 }
 
+/**
+ * @brief Multiply quaternion by scalar in-place.
+ */
+LINMATH_H_FUNC void quat_mul_scalar(quat r,const float s)
+{
+	for(int i=0;i<4;++i) r[i]*=s;
+}
+
+/**
+ * @brief Dot product between quaternions.
+ */
+LINMATH_H_FUNC float quat_dot(const quat a,const quat b)
+{
+	float p=0.f;
+	for(int i=0;i<4;++i) p+=b[i]*a[i];
+	return p;
+}
+
+/**
+ * @brief Conjugate quaternion (out-of-place).
+ */
+LINMATH_H_FUNC void quat_conjugated(quat r,const quat q)
+{
+	for(int i=1;i<4;++i) r[i]=-q[i];
+	r[0]=q[0];
+}
+
+/**
+ * @brief Conjugate quaternion in-place.
+ */
 LINMATH_H_FUNC void quat_conjugate(quat q)
 {
-	int i;
-	for(i=1; i<4; ++i)
-		q[i]*=-1.0f;
+	for(int i=1;i<4;++i) q[i]*=-1.0f;
 }
 
 #define quat_normalized vec4_normalized
 #define quat_normalize vec4_normalize
 
+/**
+ * @brief Rotate a 3D vector using quaternion.
+ */
 LINMATH_H_FUNC void quat_mul_vec3(vec3 r,const quat q,const vec3 v)
 {
-	int i;
-	vec3 a;
-	vec3 b;
-	const vec3 qv = {q[1], q[2], q[3]};
-
-	vec3_cross(a,qv, v);
-	vec3_cross(b,qv, a);
-
-	for(i = 0 ; i<3;i++)
-		r[i] = v[i] + ((a[i]*q[0])+b[i])*2.0f;
+	vec3 a,b;
+	const vec3 qv={q[1],q[2],q[3]};
+	vec3_cross(a,qv,v);
+	vec3_cross(b,qv,a);
+	for(int i=0;i<3;i++)
+		r[i]=v[i]+((a[i]*q[0])+b[i])*2.0f;
 }
 
+/**
+ * @brief Rotate a 4D vector using quaternion.
+ */
 LINMATH_H_FUNC void quat_mul_vec4(vec4 r,const quat q,const vec4 v)
 {
-	int i;
-	vec3 a;
-	vec3 b;
-	const vec3 qv = {q[1], q[2], q[3]};
-
-	vec3_cross(a,qv, v);
-	vec3_cross(b,qv, a);
-
-	for(i = 0 ; i<3;i++)
-		r[i] = v[i] + ((a[i]*q[0])+b[i])*2.0f;
-	r[3] = v[3];
+	vec3 a,b;
+	const vec3 qv={q[1],q[2],q[3]};
+	vec3_cross(a,qv,v);
+	vec3_cross(b,qv,a);
+	for(int i=0;i<3;i++)
+		r[i]=v[i]+((a[i]*q[0])+b[i])*2.0f;
+	r[3]=v[3];
 }
 
-
+/**
+ * @brief Convert quaternion to 4x4 rotation matrix.
+ */
 LINMATH_H_FUNC void quat_to_mat4x4(mat4x4 M,const quat q)
 {
-	float xx=(q[1] * q[1]);
-	float xy=(q[1] * q[2]);
-	float xz=(q[1] * q[3]);
-	float xw=(q[1] * q[0]);
+	float xx=q[1]*q[1], xy=q[1]*q[2], xz=q[1]*q[3], xw=q[1]*q[0];
+	float yy=q[2]*q[2], yz=q[2]*q[3], yw=q[2]*q[0];
+	float zz=q[3]*q[3], zw=q[3]*q[0];
 
-	float yy=(q[2] * q[2]);
-	float yz=(q[2] * q[3]);
-	float yw=(q[2] * q[0]);
-
-	float zz=(q[3] * q[3]);
-	float zw=(q[3] * q[0]);
-
-	M[0][0] = 1.0f - 2.0f * (yy +  zz);
-	M[0][1] = 2.0f * (xy + zw);
-	M[0][2] = 2.0f * (xz - yw);
-	M[0][3] = 0.0f;
-
-	M[1][0] = 2.0f * (xy - zw);
-	M[1][1] = 1.0f - 2.0f * (xx +  zz);
-	M[1][2] = 2.0f * (yz + xw);
-	M[1][3] = 0.0f;
-
-	M[2][0] = 2.0f * (xz + yw);
-	M[2][1] = 2.0f * (yz - xw);
-	M[2][2] = 1.0f - 2.0f * (xx +  yy);
-	M[2][3] = 0.0f;
-
-	M[3][0] = 0.0f;
-	M[3][1] = 0.0f;
-	M[3][2] = 0.0f;
-	M[3][3] = 1.0f;
+	M[0][0]=1-2*(yy+zz); M[0][1]=2*(xy+zw); M[0][2]=2*(xz-yw); M[0][3]=0;
+	M[1][0]=2*(xy-zw); M[1][1]=1-2*(xx+zz); M[1][2]=2*(yz+xw); M[1][3]=0;
+	M[2][0]=2*(xz+yw); M[2][1]=2*(yz-xw); M[2][2]=1-2*(xx+yy); M[2][3]=0;
+	M[3][0]=M[3][1]=M[3][2]=0; M[3][3]=1;
 }
 
+/**
+ * @brief Create quaternion from rotation matrix.
+ */
 LINMATH_H_FUNC void quat_make_from_mat4x4(quat q,const mat4x4 M)
 {
 	float r=0.f;
-	int i;
+	int perm[]={0,1,2,0,1},*p=perm;
 
-	int perm[] = { 0, 1, 2, 0, 1 };
-	int *p = perm;
-
-	for(i = 0; i<3; i++)
-	{
-		float m = M[i][i];
-		if( m < r )
-			continue;
-		m = r;
-		p = &perm[i];
+	for(int i=0;i<3;i++){
+		float m=M[i][i];
+		if(m<r) continue;
+		m=r; p=&perm[i];
 	}
 
-	r = sqrtf(1.f + M[p[0]][p[0]] - M[p[1]][p[1]] - M[p[2]][p[2]] );
+	r=sqrtf(1.f+M[p[0]][p[0]]-M[p[1]][p[1]]-M[p[2]][p[2]]);
+	if(r<1e-6){ q[0]=1; q[1]=q[2]=q[3]=0; return; }
 
-	if(r < 1e-6) {
-		q[0] = 1.f;
-		q[1] = q[2] = q[3] = 0.f;
-		return;
-	}
-
-	q[0] = r/2.f;
-	q[1] = (M[p[0]][p[1]] - M[p[1]][p[0]])/(2.f*r);
-	q[2] = (M[p[2]][p[0]] - M[p[0]][p[2]])/(2.f*r);
-	q[3] = (M[p[2]][p[1]] - M[p[1]][p[2]])/(2.f*r);
+	q[0]=r/2.f;
+	q[1]=(M[p[0]][p[1]]-M[p[1]][p[0]])/(2*r);
+	q[2]=(M[p[2]][p[0]]-M[p[0]][p[2]])/(2*r);
+	q[3]=(M[p[2]][p[1]]-M[p[1]][p[2]])/(2*r);
 }
 
 #endif
