@@ -16,17 +16,38 @@
 #define sqrtd(x) sqrt(x)
 
 #define LINMATH_H_DEFINE_VEC_SET(T,P) \
+    /** @brief Set bidimensional vector values. \
+	  r = [x,y] \
+      @param[out] r Output vector \
+      @param[in] x First component \
+      @param[in] y Second component \
+    */ \
     LINMATH_H_FUNC void vec2##P##_set(vec2##P r, const T x, const T y) \
     { \
         r[0] = x; \
         r[1] = y; \
     } \
+    /** @brief Set tridimensional vector values. \
+	  r = [x,y,z] \
+      @param[out] r Output vector \
+      @param[in] x First component \
+      @param[in] y Second component \
+      @param[in] z Third component \
+    */ \
     LINMATH_H_FUNC void vec3##P##_set(vec3##P r, const T x, const T y, const T z) \
     { \
         r[0] = x; \
         r[1] = y; \
         r[2] = z; \
     } \
+    /** @brief Set 4dimensional vector values. \
+	  r = [x,y,z,w] \
+      @param[out] r Output vector \
+      @param[in] x First component \
+      @param[in] y Second component \
+      @param[in] z Third component \
+      @param[in] w Fourth component \
+    */ \
     LINMATH_H_FUNC void vec4##P##_set(vec4##P r, const T x, const T y, const T z, const T w) \
     { \
         r[0] = x; \
@@ -67,13 +88,24 @@
     } \
 
 #define LINMATH_H_DEFINE_VEC_TYPE_PREFIX(N,T,P)  \
+    /** @brief Vector datatype. \
+    */ \
 	typedef T vec##N##P[N]; \
+    /** @brief Vector invert. \
+	  r = -a \
+      @param[out] r Result \
+      @param[in]  a Vector to invert \
+    */ \
 	LINMATH_H_FUNC void vec##N##P##_inverted(vec##N##P r, const vec##N##P a) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		  r[i] = -a[i]; \
 	} \
+    /** @brief In-place vector invert. \
+	  a = -a \
+      @param[in,out] a Vector to invert \
+    */ \
 	LINMATH_H_FUNC void vec##N##P##_invert(vec##N##P a) \
 	{ \
 		int i; \
@@ -82,9 +114,9 @@
 	} \
     /** @brief Add two vectors. \
 	  r = a + b \
-      @param r Result \
-      @param a First parcel \
-      @param b Second parcel \
+      @param[out] r Result \
+      @param[in] a First parcel \
+      @param[in] b Second parcel \
     */ \
 	LINMATH_H_FUNC void vec##N##P##_added(vec##N##P r, const vec##N##P a,const vec##N##P b) \
 	{ \
@@ -92,10 +124,10 @@
 		for(i=0; i<N; ++i) \
 		  r[i] = a[i] + b[i]; \
 	} \
-    /** @brief In place add vector. \
+    /** @brief In-place add vector. \
 	  a += b \
-      @param a First parcel and result\
-      @param b Second parcel\
+      @param[in,out] a First parcel and result\
+      @param[in] b Second parcel\
      */ \
 	LINMATH_H_FUNC void vec##N##P##_add(vec##N##P a,const vec##N##P b) \
 	{ \
@@ -103,15 +135,21 @@
 		for(i=0; i<N; ++i) \
 		  a[i] += b[i]; \
 	} \
+	/** @brief Subtract two vectors. \
+	  r = a - b \
+      @param[out] r Difference \
+      @param[in] a Minuend \
+      @param[in] b Subtrahend \
+     */ \
 	LINMATH_H_FUNC void vec##N##P##_subed(vec##N##P r, const vec##N##P a, const vec##N##P b) \
 	{ \
 		int i; \
 		for(i=0; i<N; ++i) \
 		  r[i] = a[i] - b[i]; \
 	} \
-	/** @brief In place subtract vector.  a -= b \
-      @param a \
-      @param b \
+	/** @brief In-place subtract vector.  a -= b \
+      @param[in,out] a Minuend and difference\
+      @param[in] b Subtrahend\
      */ \
 	LINMATH_H_FUNC void vec##N##P##_sub(vec##N##P a, const vec##N##P b) \
 	{ \
@@ -220,7 +258,6 @@ LINMATH_H_FUNC void vec4_cross(vec4 r, const vec4 a, const vec4 b)
 	r[3] = 1.f;
 }
 
-
 /**
  * @brief 4x4 Matrix data type
  */
@@ -228,7 +265,7 @@ typedef float mat4x4[4][4];
 
 /**
  * @brief mat4x4_make_identity M = Identity Matrix
- * @param M
+ * @param[out] M
  */
 LINMATH_H_FUNC void mat4x4_make_identity(mat4x4 M)
 {
@@ -310,10 +347,10 @@ LINMATH_H_FUNC void mat4x4_transposed(mat4x4 M,const mat4x4 N)
 			M[i][j] = N[j][i];
 }
 /**
- * @brief mat4x4_added R = A + B
- * @param R
- * @param A
- * @param B
+ * @brief Matrix 4x4 addition R = A + B
+ * @param[out] R Addition
+ * @param[in] A First parcel
+ * @param[in] B Second Parce
  */
 LINMATH_H_FUNC void mat4x4_added(mat4x4 R,const mat4x4 A,const mat4x4 B)
 {
@@ -327,9 +364,9 @@ LINMATH_H_FUNC void mat4x4_added(mat4x4 R,const mat4x4 A,const mat4x4 B)
 	}
 }
 /**
- * @brief mat4x4_added A+=B
- * @param A
- * @param B
+ * @brief In-Place matrix 4x4 addition A+=B
+ * @param[in,out] A First parcel and addition
+ * @param[in] B Second parcel
  */
 LINMATH_H_FUNC void mat4x4_add(mat4x4 A,const mat4x4 B)
 {
@@ -343,10 +380,10 @@ LINMATH_H_FUNC void mat4x4_add(mat4x4 A,const mat4x4 B)
 }
 
 /**
- * @brief mat4x4_subed M = A-B
- * @param M
- * @param A
- * @param B
+ * @brief Matrix 4x4 Subtraction M = A-B
+ * @param[out] M Difference
+ * @param[in] A Minuend
+ * @param[in] B Subtratend
  */
 LINMATH_H_FUNC void mat4x4_subed(mat4x4 M,const mat4x4 A,const mat4x4 B)
 {
@@ -360,9 +397,9 @@ LINMATH_H_FUNC void mat4x4_subed(mat4x4 M,const mat4x4 A,const mat4x4 B)
 	}
 }
 /**
- * @brief mat4x4_sub A -= B
- * @param A
- * @param B
+ * @brief In-place matrix 4x4 Subtraction A -= B
+ * @param[in,out] A Minuend and difference
+ * @param[in] B Subtratend
  */
 LINMATH_H_FUNC void mat4x4_sub(mat4x4 A,const mat4x4 B)
 {
@@ -377,10 +414,10 @@ LINMATH_H_FUNC void mat4x4_sub(mat4x4 A,const mat4x4 B)
 }
 
 /**
- * @brief mat4x4_scaled M = A*k
- * @param M
- * @param A
- * @param k
+ * @brief Matrix 4x4 scale M = A*k
+ * @param[out] M Scaled matrix
+ * @param[in] A Original matrix
+ * @param[in] k Scale factor
  */
 LINMATH_H_FUNC void mat4x4_muled_scalar(mat4x4 M,const mat4x4 A,const float k)
 {
@@ -395,9 +432,9 @@ LINMATH_H_FUNC void mat4x4_muled_scalar(mat4x4 M,const mat4x4 A,const float k)
 }
 
 /**
- * @brief mat4x4_scale A*=k
- * @param M
- * @param k
+ * @brief In-place matrix 4x4 scale M = M*k
+ * @param[in,out] M Matrix
+ * @param[in] k Scale factor
  */
 LINMATH_H_FUNC void mat4x4_mul_scalar(mat4x4 M,const float k)
 {
@@ -411,32 +448,32 @@ LINMATH_H_FUNC void mat4x4_mul_scalar(mat4x4 M,const float k)
 }
 
 /**
- * @brief mat4x4_scaled_aniso R = scale_aniso(A,x,y,z)
- * @param R
- * @param A
- * @param x
- * @param y
- * @param z
+ * @brief Matrix 4x4 anisotropic scale M = A*((x,0,0,0)(0,y,0,0)(0,0,z,0)(0,0,0,1))
+ * @param[out] M Scaled matrix
+ * @param[in]  A Original matrix
+ * @param[in]  x Scale factor in x axis
+ * @param[in]  y Scale factor in y axis
+ * @param[in]  z Scale factor in z axis
  */
-LINMATH_H_FUNC void mat4x4_scaled(mat4x4 R,const mat4x4 A,
+LINMATH_H_FUNC void mat4x4_scaled(mat4x4 M,const mat4x4 A,
 								 const float x,const  float y,const float z)
 {
 	int i;
-	vec4_scaled(R[0], A[0], x);
-	vec4_scaled(R[1], A[1], y);
-	vec4_scaled(R[2], A[2], z);
+	vec4_scaled(M[0], A[0], x);
+	vec4_scaled(M[1], A[1], y);
+	vec4_scaled(M[2], A[2], z);
 	for(i = 0; i < 4; ++i)
 	{
-		R[3][i] = A[3][i];
+		M[3][i] = A[3][i];
 	}
 }
 
 /**
- * @brief mat4x4_scale_aniso M *= ((x,0,0,0)(0,y,0,0)(0,0,z,0)(0,0,0,1))
- * @param M
- * @param x
- * @param y
- * @param z
+ * @brief In-plca matrix 4x4 anisotropic scale M *= ((x,0,0,0)(0,y,0,0)(0,0,z,0)(0,0,0,1))
+ * @param[in,out] M Matrix
+ * @param[in]  x Scale factor in x axis
+ * @param[in]  y Scale factor in y axis
+ * @param[in]  z Scale factor in z axis
  */
 LINMATH_H_FUNC void mat4x4_scale(mat4x4 M,
 								const float x,const  float y,const float z)
@@ -447,12 +484,12 @@ LINMATH_H_FUNC void mat4x4_scale(mat4x4 M,
 }
 
 /**
- * @brief mat4x4_muled R = A*B;
- * @param R
- * @param A
- * @param B
+ * @brief Matrix 4x4 multiplication R = A*B;
+ * @param[in,out] R Product matrix
+ * @param[in] A	First factor matrix
+ * @param[in] B Second factor matrix
  */
-LINMATH_H_FUNC void mat4x4_mult(mat4x4 R,const mat4x4 A, const mat4x4 B)
+LINMATH_H_FUNC void mat4x4_mult(mat4x4 R, const mat4x4 A, const mat4x4 B)
 {
 	int k, r, c;
 	for(c=0; c<4; ++c) for(r=0; r<4; ++r) {
@@ -464,9 +501,9 @@ LINMATH_H_FUNC void mat4x4_mult(mat4x4 R,const mat4x4 A, const mat4x4 B)
 
 /**
  * @brief mat4x4_mul_vec4 r = M*v
- * @param r
- * @param M
- * @param v
+ * @param[out] r
+ * @param[in] M
+ * @param[in] v
  */
 LINMATH_H_FUNC void mat4x4_mul_vec4(vec4 r,const mat4x4 M, const vec4 v)
 {
@@ -480,10 +517,10 @@ LINMATH_H_FUNC void mat4x4_mul_vec4(vec4 r,const mat4x4 M, const vec4 v)
 
 /**
  * @brief mat4x4_translate M = M translated by x,y,z
- * @param M
- * @param x
- * @param y
- * @param z
+ * @param[out] M
+ * @param[in] x
+ * @param[in] y
+ * @param[in] z
  */
 LINMATH_H_FUNC void mat4x4_translate(mat4x4 M,
 									const float x,const float y,const float z)
@@ -499,11 +536,11 @@ LINMATH_H_FUNC void mat4x4_translate(mat4x4 M,
 
 /**
  * @brief mat4x4_translated R = M translated by x,y,z
- * @param R
- * @param M
- * @param x
- * @param y
- * @param z
+ * @param[out] R Translated matrix
+ * @param[in]  M Original matrix
+ * @param[in]  x x coord of tanslation vector
+ * @param[in]  y y coord of tanslation vector
+ * @param[in]  z z coord of tanslation vector
  */
 LINMATH_H_FUNC void mat4x4_translated(mat4x4 R,const mat4x4 M, const float x,const float y,const float z)
 {
@@ -513,9 +550,9 @@ LINMATH_H_FUNC void mat4x4_translated(mat4x4 R,const mat4x4 M, const float x,con
 
 /**
  * @brief mat4x4_from_vec3_mult R = a^T * b
- * @param R
- * @param a
- * @param b
+ * @param[out] R
+ * @param[in] a
+ * @param[in] b
  */
 LINMATH_H_FUNC void mat4x4_from_vec3_mult(mat4x4 R,const vec3 a,const vec3 b)
 {
@@ -528,9 +565,9 @@ LINMATH_H_FUNC void mat4x4_from_vec3_mult(mat4x4 R,const vec3 a,const vec3 b)
 }
 /**
  * @brief mat4x4_from_vec3_mult R = a^T * b
- * @param R
- * @param a
- * @param b
+ * @param[out] R
+ * @param[in] a
+ * @param[in] b
  */
 LINMATH_H_FUNC void mat4x4_from_vec4_mult(mat4x4 R,const vec4 a,const vec4 b)
 {
@@ -588,10 +625,9 @@ LINMATH_H_FUNC void mat4x4_rotated_Z(mat4x4 R,const mat4x4 M,
 	mat4x4_mult(R, M, Q);
 }
 
-/**
- * @brief mat4x4_inverse R = M^-1
- * @param R
- * @param M
+/**@brief mat4x4_inverse R = M^-1
+ * @param[out] R
+ * @param[in] M
  */
 LINMATH_H_FUNC void mat4x4_inverse(mat4x4 R,const mat4x4 M)
 {
@@ -732,8 +768,6 @@ LINMATH_H_FUNC void mat4x4_make_perspective(mat4x4 R,
 	R[3][2] = -((2.f * f * n) / (f - n));
 	R[3][3] = 0.f;
 }
-
-
 
 LINMATH_H_FUNC void mat4x4_make_look_at(mat4x4 R,
             const vec3 eye,

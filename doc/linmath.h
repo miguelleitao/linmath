@@ -1,19 +1,16 @@
-typedef float vec2[2]; 
-static inline void vec2_inverted(vec2 r, const vec2 a) { int i; for(i=0; i<2; ++i) r[i] = -a[i]; } 
+/** 
+@brief Vector datatype.     */ typedef float vec2[2]; /** 
+@brief Vector invert. 	  r = -a       @param[out] r Result       @param[in]  a Vector to invert     */ 
+static inline void vec2_inverted(vec2 r, const vec2 a) { int i; for(i=0; i<2; ++i) r[i] = -a[i]; } /** 
+@brief In-place vector invert. 	  a = -a       @param[in,out] a Vector to invert     */ 
 static inline void vec2_invert(vec2 a) { int i; for(i=0; i<2; ++i) a[i] = -a[i]; } /** 
-@brief Add two vectors. 	  r = a + b       
-@param r Result       
-@param a First parcel       
-@param b Second parcel     */ 
+@brief Add two vectors. 	  r = a + b       @param[out] r Result       @param[in] a First parcel       @param[in] b Second parcel     */ 
 static inline void vec2_added(vec2 r, const vec2 a,const vec2 b) { int i; for(i=0; i<2; ++i) r[i] = a[i] + b[i]; } /** 
-@brief In place add vector. 	  a += b       
-@param a First parcel and result      
-@param b Second parcel     */ 
-static inline void vec2_add(vec2 a,const vec2 b) { int i; for(i=0; i<2; ++i) a[i] += b[i]; } 
+@brief In-place add vector. 	  a += b       @param[in,out] a First parcel and result      @param[in] b Second parcel     */ 
+static inline void vec2_add(vec2 a,const vec2 b) { int i; for(i=0; i<2; ++i) a[i] += b[i]; } /** 
+@brief Subtract two vectors. 	  r = a - b       @param[out] r Difference       @param[in] a Minuend       @param[in] b Subtrahend      */ 
 static inline void vec2_subed(vec2 r, const vec2 a, const vec2 b) { int i; for(i=0; i<2; ++i) r[i] = a[i] - b[i]; } /** 
-@brief In place subtract vector.  a -= b       
-@param a       
-@param b      */ 
+@brief In-place subtract vector.  a -= b       @param[in,out] a Minuend and difference      @param[in] b Subtrahend     */ 
 static inline void vec2_sub(vec2 a, const vec2 b) { int i; for(i=0; i<2; ++i) a[i] -= b[i]; } 
 static inline void vec2_scaled(vec2 r, const vec2 v, const float s) { int i; for(i=0; i<2; ++i) r[i] = v[i] * s; } 
 static inline void vec2_scale(vec2 v, const float s) { int i; for(i=0; i<2; ++i) v[i] *= s; } 
@@ -26,22 +23,19 @@ static inline void vec2_normalized(vec2 r,const vec2 v) { float k = 1. / vec2_le
 static inline void vec2_normalize(vec2 v) { float k = 1. / vec2_len(v); vec2_scale(v, k); } 
 static inline void vec2_min(vec2 r, const vec2 a, const vec2 b) { int i; for(i=0; i<2; ++i) r[i] = a[i]<b[i] ? a[i] : b[i]; } 
 static inline void vec2_max(vec2 r, const vec2 a,const vec2 b) { int i; for(i=0; i<2; ++i) r[i] = a[i]>b[i] ? a[i] : b[i]; }
-typedef float vec3[3]; 
-static inline void vec3_inverted(vec3 r, const vec3 a) { int i; for(i=0; i<3; ++i) r[i] = -a[i]; } 
+/** 
+@brief Vector datatype.     */ typedef float vec3[3]; /** 
+@brief Vector invert. 	  r = -a       @param[out] r Result       @param[in]  a Vector to invert     */ 
+static inline void vec3_inverted(vec3 r, const vec3 a) { int i; for(i=0; i<3; ++i) r[i] = -a[i]; } /** 
+@brief In-place vector invert. 	  a = -a       @param[in,out] a Vector to invert     */ 
 static inline void vec3_invert(vec3 a) { int i; for(i=0; i<3; ++i) a[i] = -a[i]; } /** 
-@brief Add two vectors. 	  r = a + b       
-@param r Result       
-@param a First parcel       
-@param b Second parcel     */ 
+@brief Add two vectors. 	  r = a + b       @param[out] r Result       @param[in] a First parcel       @param[in] b Second parcel     */ 
 static inline void vec3_added(vec3 r, const vec3 a,const vec3 b) { int i; for(i=0; i<3; ++i) r[i] = a[i] + b[i]; } /** 
-@brief In place add vector. 	  a += b       
-@param a First parcel and result      
-@param b Second parcel     */ 
-static inline void vec3_add(vec3 a,const vec3 b) { int i; for(i=0; i<3; ++i) a[i] += b[i]; } 
+@brief In-place add vector. 	  a += b       @param[in,out] a First parcel and result      @param[in] b Second parcel     */ 
+static inline void vec3_add(vec3 a,const vec3 b) { int i; for(i=0; i<3; ++i) a[i] += b[i]; } /** 
+@brief Subtract two vectors. 	  r = a - b       @param[out] r Difference       @param[in] a Minuend       @param[in] b Subtrahend      */ 
 static inline void vec3_subed(vec3 r, const vec3 a, const vec3 b) { int i; for(i=0; i<3; ++i) r[i] = a[i] - b[i]; } /** 
-@brief In place subtract vector.  a -= b       
-@param a       
-@param b      */ 
+@brief In-place subtract vector.  a -= b       @param[in,out] a Minuend and difference      @param[in] b Subtrahend     */ 
 static inline void vec3_sub(vec3 a, const vec3 b) { int i; for(i=0; i<3; ++i) a[i] -= b[i]; } 
 static inline void vec3_scaled(vec3 r, const vec3 v, const float s) { int i; for(i=0; i<3; ++i) r[i] = v[i] * s; } 
 static inline void vec3_scale(vec3 v, const float s) { int i; for(i=0; i<3; ++i) v[i] *= s; } 
@@ -54,22 +48,19 @@ static inline void vec3_normalized(vec3 r,const vec3 v) { float k = 1. / vec3_le
 static inline void vec3_normalize(vec3 v) { float k = 1. / vec3_len(v); vec3_scale(v, k); } 
 static inline void vec3_min(vec3 r, const vec3 a, const vec3 b) { int i; for(i=0; i<3; ++i) r[i] = a[i]<b[i] ? a[i] : b[i]; } 
 static inline void vec3_max(vec3 r, const vec3 a,const vec3 b) { int i; for(i=0; i<3; ++i) r[i] = a[i]>b[i] ? a[i] : b[i]; }
-typedef float vec4[4]; 
-static inline void vec4_inverted(vec4 r, const vec4 a) { int i; for(i=0; i<4; ++i) r[i] = -a[i]; } 
+/** 
+@brief Vector datatype.     */ typedef float vec4[4]; /** 
+@brief Vector invert. 	  r = -a       @param[out] r Result       @param[in]  a Vector to invert     */ 
+static inline void vec4_inverted(vec4 r, const vec4 a) { int i; for(i=0; i<4; ++i) r[i] = -a[i]; } /** 
+@brief In-place vector invert. 	  a = -a       @param[in,out] a Vector to invert     */ 
 static inline void vec4_invert(vec4 a) { int i; for(i=0; i<4; ++i) a[i] = -a[i]; } /** 
-@brief Add two vectors. 	  r = a + b       
-@param r Result       
-@param a First parcel       
-@param b Second parcel     */ 
+@brief Add two vectors. 	  r = a + b       @param[out] r Result       @param[in] a First parcel       @param[in] b Second parcel     */ 
 static inline void vec4_added(vec4 r, const vec4 a,const vec4 b) { int i; for(i=0; i<4; ++i) r[i] = a[i] + b[i]; } /** 
-@brief In place add vector. 	  a += b       
-@param a First parcel and result      
-@param b Second parcel     */ 
-static inline void vec4_add(vec4 a,const vec4 b) { int i; for(i=0; i<4; ++i) a[i] += b[i]; } 
+@brief In-place add vector. 	  a += b       @param[in,out] a First parcel and result      @param[in] b Second parcel     */ 
+static inline void vec4_add(vec4 a,const vec4 b) { int i; for(i=0; i<4; ++i) a[i] += b[i]; } /** 
+@brief Subtract two vectors. 	  r = a - b       @param[out] r Difference       @param[in] a Minuend       @param[in] b Subtrahend      */ 
 static inline void vec4_subed(vec4 r, const vec4 a, const vec4 b) { int i; for(i=0; i<4; ++i) r[i] = a[i] - b[i]; } /** 
-@brief In place subtract vector.  a -= b       
-@param a       
-@param b      */ 
+@brief In-place subtract vector.  a -= b       @param[in,out] a Minuend and difference      @param[in] b Subtrahend     */ 
 static inline void vec4_sub(vec4 a, const vec4 b) { int i; for(i=0; i<4; ++i) a[i] -= b[i]; } 
 static inline void vec4_scaled(vec4 r, const vec4 v, const float s) { int i; for(i=0; i<4; ++i) r[i] = v[i] * s; } 
 static inline void vec4_scale(vec4 v, const float s) { int i; for(i=0; i<4; ++i) v[i] *= s; } 
@@ -82,22 +73,19 @@ static inline void vec4_normalized(vec4 r,const vec4 v) { float k = 1. / vec4_le
 static inline void vec4_normalize(vec4 v) { float k = 1. / vec4_len(v); vec4_scale(v, k); } 
 static inline void vec4_min(vec4 r, const vec4 a, const vec4 b) { int i; for(i=0; i<4; ++i) r[i] = a[i]<b[i] ? a[i] : b[i]; } 
 static inline void vec4_max(vec4 r, const vec4 a,const vec4 b) { int i; for(i=0; i<4; ++i) r[i] = a[i]>b[i] ? a[i] : b[i]; }
-typedef double vec2d[2]; 
-static inline void vec2d_inverted(vec2d r, const vec2d a) { int i; for(i=0; i<2; ++i) r[i] = -a[i]; } 
+/** 
+@brief Vector datatype.     */ typedef double vec2d[2]; /** 
+@brief Vector invert. 	  r = -a       @param[out] r Result       @param[in]  a Vector to invert     */ 
+static inline void vec2d_inverted(vec2d r, const vec2d a) { int i; for(i=0; i<2; ++i) r[i] = -a[i]; } /** 
+@brief In-place vector invert. 	  a = -a       @param[in,out] a Vector to invert     */ 
 static inline void vec2d_invert(vec2d a) { int i; for(i=0; i<2; ++i) a[i] = -a[i]; } /** 
-@brief Add two vectors. 	  r = a + b       
-@param r Result       
-@param a First parcel       
-@param b Second parcel     */ 
+@brief Add two vectors. 	  r = a + b       @param[out] r Result       @param[in] a First parcel       @param[in] b Second parcel     */ 
 static inline void vec2d_added(vec2d r, const vec2d a,const vec2d b) { int i; for(i=0; i<2; ++i) r[i] = a[i] + b[i]; } /** 
-@brief In place add vector. 	  a += b       
-@param a First parcel and result      
-@param b Second parcel     */ 
-static inline void vec2d_add(vec2d a,const vec2d b) { int i; for(i=0; i<2; ++i) a[i] += b[i]; } 
+@brief In-place add vector. 	  a += b       @param[in,out] a First parcel and result      @param[in] b Second parcel     */ 
+static inline void vec2d_add(vec2d a,const vec2d b) { int i; for(i=0; i<2; ++i) a[i] += b[i]; } /** 
+@brief Subtract two vectors. 	  r = a - b       @param[out] r Difference       @param[in] a Minuend       @param[in] b Subtrahend      */ 
 static inline void vec2d_subed(vec2d r, const vec2d a, const vec2d b) { int i; for(i=0; i<2; ++i) r[i] = a[i] - b[i]; } /** 
-@brief In place subtract vector.  a -= b       
-@param a       
-@param b      */ 
+@brief In-place subtract vector.  a -= b       @param[in,out] a Minuend and difference      @param[in] b Subtrahend     */ 
 static inline void vec2d_sub(vec2d a, const vec2d b) { int i; for(i=0; i<2; ++i) a[i] -= b[i]; } 
 static inline void vec2d_scaled(vec2d r, const vec2d v, const double s) { int i; for(i=0; i<2; ++i) r[i] = v[i] * s; } 
 static inline void vec2d_scale(vec2d v, const double s) { int i; for(i=0; i<2; ++i) v[i] *= s; } 
@@ -110,22 +98,19 @@ static inline void vec2d_normalized(vec2d r,const vec2d v) { double k = 1.d / ve
 static inline void vec2d_normalize(vec2d v) { double k = 1.d / vec2d_len(v); vec2d_scale(v, k); } 
 static inline void vec2d_min(vec2d r, const vec2d a, const vec2d b) { int i; for(i=0; i<2; ++i) r[i] = a[i]<b[i] ? a[i] : b[i]; } 
 static inline void vec2d_max(vec2d r, const vec2d a,const vec2d b) { int i; for(i=0; i<2; ++i) r[i] = a[i]>b[i] ? a[i] : b[i]; }
-typedef double vec3d[3]; 
-static inline void vec3d_inverted(vec3d r, const vec3d a) { int i; for(i=0; i<3; ++i) r[i] = -a[i]; } 
+/** 
+@brief Vector datatype.     */ typedef double vec3d[3]; /** 
+@brief Vector invert. 	  r = -a       @param[out] r Result       @param[in]  a Vector to invert     */ 
+static inline void vec3d_inverted(vec3d r, const vec3d a) { int i; for(i=0; i<3; ++i) r[i] = -a[i]; } /** 
+@brief In-place vector invert. 	  a = -a       @param[in,out] a Vector to invert     */ 
 static inline void vec3d_invert(vec3d a) { int i; for(i=0; i<3; ++i) a[i] = -a[i]; } /** 
-@brief Add two vectors. 	  r = a + b       
-@param r Result       
-@param a First parcel       
-@param b Second parcel     */ 
+@brief Add two vectors. 	  r = a + b       @param[out] r Result       @param[in] a First parcel       @param[in] b Second parcel     */ 
 static inline void vec3d_added(vec3d r, const vec3d a,const vec3d b) { int i; for(i=0; i<3; ++i) r[i] = a[i] + b[i]; } /** 
-@brief In place add vector. 	  a += b       
-@param a First parcel and result      
-@param b Second parcel     */ 
-static inline void vec3d_add(vec3d a,const vec3d b) { int i; for(i=0; i<3; ++i) a[i] += b[i]; } 
+@brief In-place add vector. 	  a += b       @param[in,out] a First parcel and result      @param[in] b Second parcel     */ 
+static inline void vec3d_add(vec3d a,const vec3d b) { int i; for(i=0; i<3; ++i) a[i] += b[i]; } /** 
+@brief Subtract two vectors. 	  r = a - b       @param[out] r Difference       @param[in] a Minuend       @param[in] b Subtrahend      */ 
 static inline void vec3d_subed(vec3d r, const vec3d a, const vec3d b) { int i; for(i=0; i<3; ++i) r[i] = a[i] - b[i]; } /** 
-@brief In place subtract vector.  a -= b       
-@param a       
-@param b      */ 
+@brief In-place subtract vector.  a -= b       @param[in,out] a Minuend and difference      @param[in] b Subtrahend     */ 
 static inline void vec3d_sub(vec3d a, const vec3d b) { int i; for(i=0; i<3; ++i) a[i] -= b[i]; } 
 static inline void vec3d_scaled(vec3d r, const vec3d v, const double s) { int i; for(i=0; i<3; ++i) r[i] = v[i] * s; } 
 static inline void vec3d_scale(vec3d v, const double s) { int i; for(i=0; i<3; ++i) v[i] *= s; } 
@@ -138,22 +123,19 @@ static inline void vec3d_normalized(vec3d r,const vec3d v) { double k = 1.d / ve
 static inline void vec3d_normalize(vec3d v) { double k = 1.d / vec3d_len(v); vec3d_scale(v, k); } 
 static inline void vec3d_min(vec3d r, const vec3d a, const vec3d b) { int i; for(i=0; i<3; ++i) r[i] = a[i]<b[i] ? a[i] : b[i]; } 
 static inline void vec3d_max(vec3d r, const vec3d a,const vec3d b) { int i; for(i=0; i<3; ++i) r[i] = a[i]>b[i] ? a[i] : b[i]; }
-typedef double vec4d[4]; 
-static inline void vec4d_inverted(vec4d r, const vec4d a) { int i; for(i=0; i<4; ++i) r[i] = -a[i]; } 
+/** 
+@brief Vector datatype.     */ typedef double vec4d[4]; /** 
+@brief Vector invert. 	  r = -a       @param[out] r Result       @param[in]  a Vector to invert     */ 
+static inline void vec4d_inverted(vec4d r, const vec4d a) { int i; for(i=0; i<4; ++i) r[i] = -a[i]; } /** 
+@brief In-place vector invert. 	  a = -a       @param[in,out] a Vector to invert     */ 
 static inline void vec4d_invert(vec4d a) { int i; for(i=0; i<4; ++i) a[i] = -a[i]; } /** 
-@brief Add two vectors. 	  r = a + b       
-@param r Result       
-@param a First parcel       
-@param b Second parcel     */ 
+@brief Add two vectors. 	  r = a + b       @param[out] r Result       @param[in] a First parcel       @param[in] b Second parcel     */ 
 static inline void vec4d_added(vec4d r, const vec4d a,const vec4d b) { int i; for(i=0; i<4; ++i) r[i] = a[i] + b[i]; } /** 
-@brief In place add vector. 	  a += b       
-@param a First parcel and result      
-@param b Second parcel     */ 
-static inline void vec4d_add(vec4d a,const vec4d b) { int i; for(i=0; i<4; ++i) a[i] += b[i]; } 
+@brief In-place add vector. 	  a += b       @param[in,out] a First parcel and result      @param[in] b Second parcel     */ 
+static inline void vec4d_add(vec4d a,const vec4d b) { int i; for(i=0; i<4; ++i) a[i] += b[i]; } /** 
+@brief Subtract two vectors. 	  r = a - b       @param[out] r Difference       @param[in] a Minuend       @param[in] b Subtrahend      */ 
 static inline void vec4d_subed(vec4d r, const vec4d a, const vec4d b) { int i; for(i=0; i<4; ++i) r[i] = a[i] - b[i]; } /** 
-@brief In place subtract vector.  a -= b       
-@param a       
-@param b      */ 
+@brief In-place subtract vector.  a -= b       @param[in,out] a Minuend and difference      @param[in] b Subtrahend     */ 
 static inline void vec4d_sub(vec4d a, const vec4d b) { int i; for(i=0; i<4; ++i) a[i] -= b[i]; } 
 static inline void vec4d_scaled(vec4d r, const vec4d v, const double s) { int i; for(i=0; i<4; ++i) r[i] = v[i] * s; } 
 static inline void vec4d_scale(vec4d v, const double s) { int i; for(i=0; i<4; ++i) v[i] *= s; } 
@@ -166,22 +148,19 @@ static inline void vec4d_normalized(vec4d r,const vec4d v) { double k = 1.d / ve
 static inline void vec4d_normalize(vec4d v) { double k = 1.d / vec4d_len(v); vec4d_scale(v, k); } 
 static inline void vec4d_min(vec4d r, const vec4d a, const vec4d b) { int i; for(i=0; i<4; ++i) r[i] = a[i]<b[i] ? a[i] : b[i]; } 
 static inline void vec4d_max(vec4d r, const vec4d a,const vec4d b) { int i; for(i=0; i<4; ++i) r[i] = a[i]>b[i] ? a[i] : b[i]; }
-typedef float vec2f[2]; 
-static inline void vec2f_inverted(vec2f r, const vec2f a) { int i; for(i=0; i<2; ++i) r[i] = -a[i]; } 
+/** 
+@brief Vector datatype.     */ typedef float vec2f[2]; /** 
+@brief Vector invert. 	  r = -a       @param[out] r Result       @param[in]  a Vector to invert     */ 
+static inline void vec2f_inverted(vec2f r, const vec2f a) { int i; for(i=0; i<2; ++i) r[i] = -a[i]; } /** 
+@brief In-place vector invert. 	  a = -a       @param[in,out] a Vector to invert     */ 
 static inline void vec2f_invert(vec2f a) { int i; for(i=0; i<2; ++i) a[i] = -a[i]; } /** 
-@brief Add two vectors. 	  r = a + b       
-@param r Result       
-@param a First parcel       
-@param b Second parcel     */ 
+@brief Add two vectors. 	  r = a + b       @param[out] r Result       @param[in] a First parcel       @param[in] b Second parcel     */ 
 static inline void vec2f_added(vec2f r, const vec2f a,const vec2f b) { int i; for(i=0; i<2; ++i) r[i] = a[i] + b[i]; } /** 
-@brief In place add vector. 	  a += b       
-@param a First parcel and result      
-@param b Second parcel     */ 
-static inline void vec2f_add(vec2f a,const vec2f b) { int i; for(i=0; i<2; ++i) a[i] += b[i]; } 
+@brief In-place add vector. 	  a += b       @param[in,out] a First parcel and result      @param[in] b Second parcel     */ 
+static inline void vec2f_add(vec2f a,const vec2f b) { int i; for(i=0; i<2; ++i) a[i] += b[i]; } /** 
+@brief Subtract two vectors. 	  r = a - b       @param[out] r Difference       @param[in] a Minuend       @param[in] b Subtrahend      */ 
 static inline void vec2f_subed(vec2f r, const vec2f a, const vec2f b) { int i; for(i=0; i<2; ++i) r[i] = a[i] - b[i]; } /** 
-@brief In place subtract vector.  a -= b       
-@param a       
-@param b      */ 
+@brief In-place subtract vector.  a -= b       @param[in,out] a Minuend and difference      @param[in] b Subtrahend     */ 
 static inline void vec2f_sub(vec2f a, const vec2f b) { int i; for(i=0; i<2; ++i) a[i] -= b[i]; } 
 static inline void vec2f_scaled(vec2f r, const vec2f v, const float s) { int i; for(i=0; i<2; ++i) r[i] = v[i] * s; } 
 static inline void vec2f_scale(vec2f v, const float s) { int i; for(i=0; i<2; ++i) v[i] *= s; } 
@@ -194,22 +173,19 @@ static inline void vec2f_normalized(vec2f r,const vec2f v) { float k = 1.f / vec
 static inline void vec2f_normalize(vec2f v) { float k = 1.f / vec2f_len(v); vec2f_scale(v, k); } 
 static inline void vec2f_min(vec2f r, const vec2f a, const vec2f b) { int i; for(i=0; i<2; ++i) r[i] = a[i]<b[i] ? a[i] : b[i]; } 
 static inline void vec2f_max(vec2f r, const vec2f a,const vec2f b) { int i; for(i=0; i<2; ++i) r[i] = a[i]>b[i] ? a[i] : b[i]; }
-typedef float vec3f[3]; 
-static inline void vec3f_inverted(vec3f r, const vec3f a) { int i; for(i=0; i<3; ++i) r[i] = -a[i]; } 
+/** 
+@brief Vector datatype.     */ typedef float vec3f[3]; /** 
+@brief Vector invert. 	  r = -a       @param[out] r Result       @param[in]  a Vector to invert     */ 
+static inline void vec3f_inverted(vec3f r, const vec3f a) { int i; for(i=0; i<3; ++i) r[i] = -a[i]; } /** 
+@brief In-place vector invert. 	  a = -a       @param[in,out] a Vector to invert     */ 
 static inline void vec3f_invert(vec3f a) { int i; for(i=0; i<3; ++i) a[i] = -a[i]; } /** 
-@brief Add two vectors. 	  r = a + b       
-@param r Result       
-@param a First parcel       
-@param b Second parcel     */ 
+@brief Add two vectors. 	  r = a + b       @param[out] r Result       @param[in] a First parcel       @param[in] b Second parcel     */ 
 static inline void vec3f_added(vec3f r, const vec3f a,const vec3f b) { int i; for(i=0; i<3; ++i) r[i] = a[i] + b[i]; } /** 
-@brief In place add vector. 	  a += b       
-@param a First parcel and result      
-@param b Second parcel     */ 
-static inline void vec3f_add(vec3f a,const vec3f b) { int i; for(i=0; i<3; ++i) a[i] += b[i]; } 
+@brief In-place add vector. 	  a += b       @param[in,out] a First parcel and result      @param[in] b Second parcel     */ 
+static inline void vec3f_add(vec3f a,const vec3f b) { int i; for(i=0; i<3; ++i) a[i] += b[i]; } /** 
+@brief Subtract two vectors. 	  r = a - b       @param[out] r Difference       @param[in] a Minuend       @param[in] b Subtrahend      */ 
 static inline void vec3f_subed(vec3f r, const vec3f a, const vec3f b) { int i; for(i=0; i<3; ++i) r[i] = a[i] - b[i]; } /** 
-@brief In place subtract vector.  a -= b       
-@param a       
-@param b      */ 
+@brief In-place subtract vector.  a -= b       @param[in,out] a Minuend and difference      @param[in] b Subtrahend     */ 
 static inline void vec3f_sub(vec3f a, const vec3f b) { int i; for(i=0; i<3; ++i) a[i] -= b[i]; } 
 static inline void vec3f_scaled(vec3f r, const vec3f v, const float s) { int i; for(i=0; i<3; ++i) r[i] = v[i] * s; } 
 static inline void vec3f_scale(vec3f v, const float s) { int i; for(i=0; i<3; ++i) v[i] *= s; } 
@@ -222,22 +198,19 @@ static inline void vec3f_normalized(vec3f r,const vec3f v) { float k = 1.f / vec
 static inline void vec3f_normalize(vec3f v) { float k = 1.f / vec3f_len(v); vec3f_scale(v, k); } 
 static inline void vec3f_min(vec3f r, const vec3f a, const vec3f b) { int i; for(i=0; i<3; ++i) r[i] = a[i]<b[i] ? a[i] : b[i]; } 
 static inline void vec3f_max(vec3f r, const vec3f a,const vec3f b) { int i; for(i=0; i<3; ++i) r[i] = a[i]>b[i] ? a[i] : b[i]; }
-typedef float vec4f[4]; 
-static inline void vec4f_inverted(vec4f r, const vec4f a) { int i; for(i=0; i<4; ++i) r[i] = -a[i]; } 
+/** 
+@brief Vector datatype.     */ typedef float vec4f[4]; /** 
+@brief Vector invert. 	  r = -a       @param[out] r Result       @param[in]  a Vector to invert     */ 
+static inline void vec4f_inverted(vec4f r, const vec4f a) { int i; for(i=0; i<4; ++i) r[i] = -a[i]; } /** 
+@brief In-place vector invert. 	  a = -a       @param[in,out] a Vector to invert     */ 
 static inline void vec4f_invert(vec4f a) { int i; for(i=0; i<4; ++i) a[i] = -a[i]; } /** 
-@brief Add two vectors. 	  r = a + b       
-@param r Result       
-@param a First parcel       
-@param b Second parcel     */ 
+@brief Add two vectors. 	  r = a + b       @param[out] r Result       @param[in] a First parcel       @param[in] b Second parcel     */ 
 static inline void vec4f_added(vec4f r, const vec4f a,const vec4f b) { int i; for(i=0; i<4; ++i) r[i] = a[i] + b[i]; } /** 
-@brief In place add vector. 	  a += b       
-@param a First parcel and result      
-@param b Second parcel     */ 
-static inline void vec4f_add(vec4f a,const vec4f b) { int i; for(i=0; i<4; ++i) a[i] += b[i]; } 
+@brief In-place add vector. 	  a += b       @param[in,out] a First parcel and result      @param[in] b Second parcel     */ 
+static inline void vec4f_add(vec4f a,const vec4f b) { int i; for(i=0; i<4; ++i) a[i] += b[i]; } /** 
+@brief Subtract two vectors. 	  r = a - b       @param[out] r Difference       @param[in] a Minuend       @param[in] b Subtrahend      */ 
 static inline void vec4f_subed(vec4f r, const vec4f a, const vec4f b) { int i; for(i=0; i<4; ++i) r[i] = a[i] - b[i]; } /** 
-@brief In place subtract vector.  a -= b       
-@param a       
-@param b      */ 
+@brief In-place subtract vector.  a -= b       @param[in,out] a Minuend and difference      @param[in] b Subtrahend     */ 
 static inline void vec4f_sub(vec4f a, const vec4f b) { int i; for(i=0; i<4; ++i) a[i] -= b[i]; } 
 static inline void vec4f_scaled(vec4f r, const vec4f v, const float s) { int i; for(i=0; i<4; ++i) r[i] = v[i] * s; } 
 static inline void vec4f_scale(vec4f v, const float s) { int i; for(i=0; i<4; ++i) v[i] *= s; } 
@@ -250,18 +223,24 @@ static inline void vec4f_normalized(vec4f r,const vec4f v) { float k = 1.f / vec
 static inline void vec4f_normalize(vec4f v) { float k = 1.f / vec4f_len(v); vec4f_scale(v, k); } 
 static inline void vec4f_min(vec4f r, const vec4f a, const vec4f b) { int i; for(i=0; i<4; ++i) r[i] = a[i]<b[i] ? a[i] : b[i]; } 
 static inline void vec4f_max(vec4f r, const vec4f a,const vec4f b) { int i; for(i=0; i<4; ++i) r[i] = a[i]>b[i] ? a[i] : b[i]; }
-
-static inline void vec2d_set(vec2d r, const double x, const double y) { r[0] = x; r[1] = y; } 
-static inline void vec3d_set(vec3d r, const double x, const double y, const double z) { r[0] = x; r[1] = y; r[2] = z; } 
+/** 
+@brief Set bidimensional vector values. 	  r = [x,y]       @param[out] r Output vector       @param[in] x First component       @param[in] y Second component     */ 
+static inline void vec2d_set(vec2d r, const double x, const double y) { r[0] = x; r[1] = y; } /** 
+@brief Set tridimensional vector values. 	  r = [x,y,z]       @param[out] r Output vector       @param[in] x First component       @param[in] y Second component       @param[in] z Third component     */ 
+static inline void vec3d_set(vec3d r, const double x, const double y, const double z) { r[0] = x; r[1] = y; r[2] = z; } /** 
+@brief Set 4dimensional vector values. 	  r = [x,y,z,w]       @param[out] r Output vector       @param[in] x First component       @param[in] y Second component       @param[in] z Third component       @param[in] w Fourth component     */ 
 static inline void vec4d_set(vec4d r, const double x, const double y, const double z, const double w) { r[0] = x; r[1] = y; r[2] = z; r[3] = w; } 
 static inline void vec2d_copy(vec2d r, const vec2d s) { r[0] = s[0]; r[1] = s[1]; } 
 static inline void vec3d_copy(vec3d r, const vec3d s) { r[0] = s[0]; r[1] = s[1]; r[2] = s[2]; } 
 static inline void vec4d_copy(vec4d r, const vec4d s) { r[0] = s[0]; r[1] = s[1]; r[2] = s[2]; r[3] = s[3]; } 
 static inline void vec4d_from_vec3(vec4d r, const vec3d s) { r[0] = s[0]; r[1] = s[1]; r[2] = s[2]; r[3] = 0.; } 
 static inline void vec3d_from_vec4(vec3d r, const vec4d s) { r[0] = s[0]; r[1] = s[1]; r[2] = s[2]; }
-
-static inline void vec2f_set(vec2f r, const float x, const float y) { r[0] = x; r[1] = y; } 
-static inline void vec3f_set(vec3f r, const float x, const float y, const float z) { r[0] = x; r[1] = y; r[2] = z; } 
+/** 
+@brief Set bidimensional vector values. 	  r = [x,y]       @param[out] r Output vector       @param[in] x First component       @param[in] y Second component     */ 
+static inline void vec2f_set(vec2f r, const float x, const float y) { r[0] = x; r[1] = y; } /** 
+@brief Set tridimensional vector values. 	  r = [x,y,z]       @param[out] r Output vector       @param[in] x First component       @param[in] y Second component       @param[in] z Third component     */ 
+static inline void vec3f_set(vec3f r, const float x, const float y, const float z) { r[0] = x; r[1] = y; r[2] = z; } /** 
+@brief Set 4dimensional vector values. 	  r = [x,y,z,w]       @param[out] r Output vector       @param[in] x First component       @param[in] y Second component       @param[in] z Third component       @param[in] w Fourth component     */ 
 static inline void vec4f_set(vec4f r, const float x, const float y, const float z, const float w) { r[0] = x; r[1] = y; r[2] = z; r[3] = w; } 
 static inline void vec2f_copy(vec2f r, const vec2f s) { r[0] = s[0]; r[1] = s[1]; } 
 static inline void vec3f_copy(vec3f r, const vec3f s) { r[0] = s[0]; r[1] = s[1]; r[2] = s[2]; } 
@@ -298,8 +277,7 @@ typedef float mat4x4[4][4];
 /**
  * 
 @brief mat4x4_make_identity M = Identity Matrix
- * 
-@param M
+ * @param[out] M
  */
 
 static inline void mat4x4_make_identity(mat4x4 M)
@@ -382,13 +360,10 @@ static inline void mat4x4_transposed(mat4x4 M,const mat4x4 N)
 }
 /**
  * 
-@brief mat4x4_added R = A + B
- * 
-@param R
- * 
-@param A
- * 
-@param B
+@brief Matrix 4x4 addition R = A + B
+ * @param[out] R Addition
+ * @param[in] A First parcel
+ * @param[in] B Second Parce
  */
 
 static inline void mat4x4_added(mat4x4 R,const mat4x4 A,const mat4x4 B)
@@ -404,11 +379,9 @@ static inline void mat4x4_added(mat4x4 R,const mat4x4 A,const mat4x4 B)
 }
 /**
  * 
-@brief mat4x4_added A+=B
- * 
-@param A
- * 
-@param B
+@brief In-Place matrix 4x4 addition A+=B
+ * @param[in,out] A First parcel and addition
+ * @param[in] B Second parcel
  */
 
 static inline void mat4x4_add(mat4x4 A,const mat4x4 B)
@@ -423,13 +396,10 @@ static inline void mat4x4_add(mat4x4 A,const mat4x4 B)
 }
 /**
  * 
-@brief mat4x4_subed M = A-B
- * 
-@param M
- * 
-@param A
- * 
-@param B
+@brief Matrix 4x4 Subtraction M = A-B
+ * @param[out] M Difference
+ * @param[in] A Minuend
+ * @param[in] B Subtratend
  */
 
 static inline void mat4x4_subed(mat4x4 M,const mat4x4 A,const mat4x4 B)
@@ -445,11 +415,9 @@ static inline void mat4x4_subed(mat4x4 M,const mat4x4 A,const mat4x4 B)
 }
 /**
  * 
-@brief mat4x4_sub A -= B
- * 
-@param A
- * 
-@param B
+@brief In-place matrix 4x4 Subtraction A -= B
+ * @param[in,out] A Minuend and difference
+ * @param[in] B Subtratend
  */
 
 static inline void mat4x4_sub(mat4x4 A,const mat4x4 B)
@@ -464,13 +432,10 @@ static inline void mat4x4_sub(mat4x4 A,const mat4x4 B)
 }
 /**
  * 
-@brief mat4x4_scaled M = A*k
- * 
-@param M
- * 
-@param A
- * 
-@param k
+@brief Matrix 4x4 scale M = A*k
+ * @param[out] M Scaled matrix
+ * @param[in] A Original matrix
+ * @param[in] k Scale factor
  */
 
 static inline void mat4x4_muled_scalar(mat4x4 M,const mat4x4 A,const float k)
@@ -485,11 +450,9 @@ static inline void mat4x4_muled_scalar(mat4x4 M,const mat4x4 A,const float k)
 }
 /**
  * 
-@brief mat4x4_scale A*=k
- * 
-@param M
- * 
-@param k
+@brief In-place matrix 4x4 scale M = M*k
+ * @param[in,out] M Matrix
+ * @param[in] k Scale factor
  */
 
 static inline void mat4x4_mul_scalar(mat4x4 M,const float k)
@@ -503,42 +466,33 @@ static inline void mat4x4_mul_scalar(mat4x4 M,const float k)
 }
 /**
  * 
-@brief mat4x4_scaled_aniso R = scale_aniso(A,x,y,z)
- * 
-@param R
- * 
-@param A
- * 
-@param x
- * 
-@param y
- * 
-@param z
+@brief Matrix 4x4 anisotropic scale M = A*((x,0,0,0)(0,y,0,0)(0,0,z,0)(0,0,0,1))
+ * @param[out] M Scaled matrix
+ * @param[in]  A Original matrix
+ * @param[in]  x Scale factor in x axis
+ * @param[in]  y Scale factor in y axis
+ * @param[in]  z Scale factor in z axis
  */
 
-static inline void mat4x4_scaled(mat4x4 R,const mat4x4 A,
+static inline void mat4x4_scaled(mat4x4 M,const mat4x4 A,
          const float x,const float y,const float z)
 {
  int i;
- vec4_scaled(R[0], A[0], x);
- vec4_scaled(R[1], A[1], y);
- vec4_scaled(R[2], A[2], z);
+ vec4_scaled(M[0], A[0], x);
+ vec4_scaled(M[1], A[1], y);
+ vec4_scaled(M[2], A[2], z);
  for(i = 0; i < 4; ++i)
  {
-  R[3][i] = A[3][i];
+  M[3][i] = A[3][i];
  }
 }
 /**
  * 
-@brief mat4x4_scale_aniso M *= ((x,0,0,0)(0,y,0,0)(0,0,z,0)(0,0,0,1))
- * 
-@param M
- * 
-@param x
- * 
-@param y
- * 
-@param z
+@brief In-plca matrix 4x4 anisotropic scale M *= ((x,0,0,0)(0,y,0,0)(0,0,z,0)(0,0,0,1))
+ * @param[in,out] M Matrix
+ * @param[in]  x Scale factor in x axis
+ * @param[in]  y Scale factor in y axis
+ * @param[in]  z Scale factor in z axis
  */
 
 static inline void mat4x4_scale(mat4x4 M,
@@ -550,16 +504,13 @@ static inline void mat4x4_scale(mat4x4 M,
 }
 /**
  * 
-@brief mat4x4_muled R = A*B;
- * 
-@param R
- * 
-@param A
- * 
-@param B
+@brief Matrix 4x4 multiplication R = A*B;
+ * @param[in,out] R Product matrix
+ * @param[in] A	First factor matrix
+ * @param[in] B Second factor matrix
  */
 
-static inline void mat4x4_mult(mat4x4 R,const mat4x4 A, const mat4x4 B)
+static inline void mat4x4_mult(mat4x4 R, const mat4x4 A, const mat4x4 B)
 {
  int k, r, c;
  for(c=0; c<4; ++c) for(r=0; r<4; ++r) {
@@ -571,12 +522,9 @@ static inline void mat4x4_mult(mat4x4 R,const mat4x4 A, const mat4x4 B)
 /**
  * 
 @brief mat4x4_mul_vec4 r = M*v
- * 
-@param r
- * 
-@param M
- * 
-@param v
+ * @param[out] r
+ * @param[in] M
+ * @param[in] v
  */
 
 static inline void mat4x4_mul_vec4(vec4 r,const mat4x4 M, const vec4 v)
@@ -591,14 +539,10 @@ static inline void mat4x4_mul_vec4(vec4 r,const mat4x4 M, const vec4 v)
 /**
  * 
 @brief mat4x4_translate M = M translated by x,y,z
- * 
-@param M
- * 
-@param x
- * 
-@param y
- * 
-@param z
+ * @param[out] M
+ * @param[in] x
+ * @param[in] y
+ * @param[in] z
  */
 
 static inline void mat4x4_translate(mat4x4 M,
@@ -615,16 +559,11 @@ static inline void mat4x4_translate(mat4x4 M,
 /**
  * 
 @brief mat4x4_translated R = M translated by x,y,z
- * 
-@param R
- * 
-@param M
- * 
-@param x
- * 
-@param y
- * 
-@param z
+ * @param[out] R Translated matrix
+ * @param[in]  M Original matrix
+ * @param[in]  x x coord of tanslation vector
+ * @param[in]  y y coord of tanslation vector
+ * @param[in]  z z coord of tanslation vector
  */
 
 static inline void mat4x4_translated(mat4x4 R,const mat4x4 M, const float x,const float y,const float z)
@@ -635,12 +574,9 @@ static inline void mat4x4_translated(mat4x4 R,const mat4x4 M, const float x,cons
 /**
  * 
 @brief mat4x4_from_vec3_mult R = a^T * b
- * 
-@param R
- * 
-@param a
- * 
-@param b
+ * @param[out] R
+ * @param[in] a
+ * @param[in] b
  */
 
 static inline void mat4x4_from_vec3_mult(mat4x4 R,const vec3 a,const vec3 b)
@@ -654,12 +590,9 @@ static inline void mat4x4_from_vec3_mult(mat4x4 R,const vec3 a,const vec3 b)
 /**
  * 
 @brief mat4x4_from_vec3_mult R = a^T * b
- * 
-@param R
- * 
-@param a
- * 
-@param b
+ * @param[out] R
+ * @param[in] a
+ * @param[in] b
  */
 
 static inline void mat4x4_from_vec4_mult(mat4x4 R,const vec4 a,const vec4 b)
@@ -721,12 +654,9 @@ static inline void mat4x4_rotated_Z(mat4x4 R,const mat4x4 M,
  mat4x4_mult(R, M, Q);
 }
 /**
- * 
 @brief mat4x4_inverse R = M^-1
- * 
-@param R
- * 
-@param M
+ * @param[out] R
+ * @param[in] M
  */
 
 static inline void mat4x4_inverse(mat4x4 R,const mat4x4 M)
