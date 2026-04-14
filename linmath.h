@@ -1054,15 +1054,18 @@ LINMATH_H_FUNC void quat_muled_scalar(quat r,const quat v,const float s)
 /**
  * @brief Multiply quaternion by scalar in-place.
  */
-LINMATH_H_FUNC void quat_mul_scalar(quat r,const float s)
+LINMATH_H_FUNC void quat_mul_scalar(quat r, const float s)
 {
 	for(int i=0;i<4;++i) r[i]*=s;
 }
 
 /**
  * @brief Dot product between quaternions.
+ * @param[in] a	First quaternion
+ * @param[in] b Second quaternion
+ * @return the dot (scalar) product between the two quaternions.
  */
-LINMATH_H_FUNC float quat_dot(const quat a,const quat b)
+LINMATH_H_FUNC float quat_dot(const quat a, const quat b)
 {
 	float p=0.f;
 	for(int i=0;i<4;++i) p+=b[i]*a[i];
@@ -1071,8 +1074,10 @@ LINMATH_H_FUNC float quat_dot(const quat a,const quat b)
 
 /**
  * @brief Conjugate quaternion (out-of-place).
+ * @param[out] r	The conjugate of quaternion q
+ * @param[in]  q    Quaternion
  */
-LINMATH_H_FUNC void quat_conjugated(quat r,const quat q)
+LINMATH_H_FUNC void quat_conjugated(quat r, const quat q)
 {
 	for(int i=1;i<4;++i) r[i]=-q[i];
 	r[0]=q[0];
@@ -1080,6 +1085,7 @@ LINMATH_H_FUNC void quat_conjugated(quat r,const quat q)
 
 /**
  * @brief Conjugate quaternion in-place.
+ * @param[in,out] q	Quaternion
  */
 LINMATH_H_FUNC void quat_conjugate(quat q)
 {
@@ -1092,7 +1098,7 @@ LINMATH_H_FUNC void quat_conjugate(quat q)
 /**
  * @brief Rotate a 3D vector using quaternion.
  */
-LINMATH_H_FUNC void quat_mul_vec3(vec3 r,const quat q,const vec3 v)
+LINMATH_H_FUNC void quat_mul_vec3(vec3 r, const quat q, const vec3 v)
 {
 	vec3 a,b;
 	const vec3 qv={q[1],q[2],q[3]};
@@ -1105,7 +1111,7 @@ LINMATH_H_FUNC void quat_mul_vec3(vec3 r,const quat q,const vec3 v)
 /**
  * @brief Rotate a 4D vector using quaternion.
  */
-LINMATH_H_FUNC void quat_mul_vec4(vec4 r,const quat q,const vec4 v)
+LINMATH_H_FUNC void quat_mul_vec4(vec4 r, const quat q, const vec4 v)
 {
 	vec3 a,b;
 	const vec3 qv={q[1],q[2],q[3]};
@@ -1119,7 +1125,7 @@ LINMATH_H_FUNC void quat_mul_vec4(vec4 r,const quat q,const vec4 v)
 /**
  * @brief Convert quaternion to 4x4 rotation matrix.
  */
-LINMATH_H_FUNC void quat_to_mat4x4(mat4x4 M,const quat q)
+LINMATH_H_FUNC void quat_to_mat4x4(mat4x4 M, const quat q)
 {
 	float xx=q[1]*q[1], xy=q[1]*q[2], xz=q[1]*q[3], xw=q[1]*q[0];
 	float yy=q[2]*q[2], yz=q[2]*q[3], yw=q[2]*q[0];
@@ -1134,7 +1140,7 @@ LINMATH_H_FUNC void quat_to_mat4x4(mat4x4 M,const quat q)
 /**
  * @brief Create quaternion from rotation matrix.
  */
-LINMATH_H_FUNC void quat_make_from_mat4x4(quat q,const mat4x4 M)
+LINMATH_H_FUNC void quat_make_from_mat4x4(quat q, const mat4x4 M)
 {
 	float r=0.f;
 	int perm[]={0,1,2,0,1},*p=perm;

@@ -1,1 +1,4 @@
 linmath.h
+*.log
+html
+latex

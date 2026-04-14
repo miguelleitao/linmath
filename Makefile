@@ -1,6 +1,7 @@
 
 PROG=linmath
 SRC_FILE=${PROG}.h
+DOC_DIR=doc
 
 CC=gcc
 
@@ -16,22 +17,24 @@ ${PROG}.list: ${SRC_FILE}
 	awk '/# 6 "linmath.h" 2/ {flag=1; next} flag && /^[[:space:]]*static inline/' >$@
 
 
-EXPANDED:= doc/${SRC_FILE}
-DOXYFILE:= doc/Doxyfile
+EXPANDED:= ${DOC_DIR}/${SRC_FILE}
+DOXYFILE:= ${DOC_DIR}/Doxyfile
 
 $(EXPANDED): $(SRC_FILE)
-	@mkdir -p doc 
-	$(CC) -E -CC -P -nostdinc -I doc/stubs $< -o - | awk '{ \
+	@mkdir -p ${DOC_DIR} 
+	@echo -n "Expanding $< to $@ ... "
+	@$(CC) -E -CC -P -nostdinc -I doc/stubs $< -o - | awk '{ \
 	  gsub(/static inline/, "\nstatic inline"); \
           gsub(/@param /, "\n@param "); \
           gsub(/@brief /, "\n@brief "); \
 	  print; }'\
 	  > $@
+	@echo done.
 
 doc: $(EXPANDED)
-	doxygen $(DOXYFILE)
+	doxygen $(DOXYFILE) >${DOC_DIR}/doxygen.log
 
 clean:
-	rm -rf build html latex
+	rm -rf build ${DOC_DIR}/html ${DOC_DIR}/latex ${DOC_DIR}/*.log ${EXPANDED}
 
-.PHONY: all doc clean
+.PHONY: all doc clean 
